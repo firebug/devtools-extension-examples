@@ -9,6 +9,7 @@ CustomTheme
 This extension shows how to implement new theme for developer tools Toolbox.
 
 Related API:
+
     gDevTools.registerTheme()
     gDevTools.unregisterTheme()
 
@@ -17,6 +18,8 @@ CustomActor
 This extension shows how to implement tools/features that can be used
 to debug/inspect remote devices. Learn how to properly implement both:
 the client and sever side of new tool.
+
+Related API:
 
     Actor
     ActorFront
