@@ -13,6 +13,8 @@ Instructions
 5. You should see a message send from the backend (can be a mobile device):
 "Response from the actor: Hello from the backend!"
 
+TODO: Bug 1107888 - e10s support for dynamic actor registration
+
 Further Resources
 -----------------
 * RDP: https://wiki.mozilla.org/Remote_Debugging_Protocol
