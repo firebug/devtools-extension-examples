@@ -2,100 +2,111 @@
 
 "use strict";
 
+var self = require("sdk/self");
+
 const { Cu } = require("chrome");
 const { Panel } = require("dev/panel");
 const { Tool } = require("dev/toolbox");
 const { Class } = require("sdk/core/heritage");
-const { Trace } = require("./trace.js");
-const { MessagePort, MessageChannel } = require("sdk/messaging");
-const { DebuggerClient } = Cu.import("resource://gre/modules/devtools/dbg-client.jsm", {});
-const { defer } = require("sdk/core/promise");
 const { MyActorFront } = require("./myActor.js");
 const { viewFor } = require("sdk/view/core");
 
 const { gDevTools } = Cu.import("resource:///modules/devtools/gDevTools.jsm", {});
 const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
 
+const { Services } = Cu.import("resource://gre/modules/Services.jsm", {});
+const { ActorRegistryFront } = devtools["require"]("devtools/server/actors/actor-registry");
+
 const MyPanel = Class({
   extends: Panel,
 
   label: "My Panel",
   icon: "./icon-16.png",
-  tooltip: "Example extension",
+  tooltip: "My Custom Panel",
   url: "./myPanel.html",
 
   setup: function({debuggee}) {
-    Trace.sysout("myPanel.setup", arguments);
-
     let frame = viewFor(this);
     let parentWin = frame.ownerDocument.defaultView;
 
     this.toolbox = getToolbox(parentWin);
-    this.debuggee = debuggee;
   },
 
   dispose: function() {
-    this.content.close();
-    delete this.content;
-    delete this.debuggee;
+    if (this.myActorClass) {
+      this.myActorClass.unregister();
+    }
   },
 
   onReady: function() {
-    Trace.sysout("myPanel.onReady;", this.debuggee);
-
-    const { port1, port2 } = new MessageChannel();
-    this.content = port1;
-
-    // Listen for messages sent from the panel content.
-    this.content.onmessage = this.onContentMessage.bind(this);
-
-    // Start up channels
-    this.content.start();
-    this.debuggee.start();
-
-    // Pass channels to the panel content scope (myPanelContent.js).
-    // The content scope can send messages back to the chrome or
-    // directly to the debugger server.
-    this.postMessage("initialize", [this.debuggee, port2]);
-
-    // Connect to our custom actor {@MyActor}.
     this.connect();
   },
 
+  /**
+   * Connect to our custom {@MyActor} actor.
+   */
   connect: function() {
-    // Get access to our custom actor {@MyActor}.
     let target = this.toolbox.target;
     target.activeTab.attachThread({}, (response, threadClient) => {
-      Trace.sysout("myPanel.attach; threadClient", arguments);
+      console.log("threadClient attached", response);
 
-      let client = threadClient.client;
-      client.listTabs(response => {
-        Trace.sysout("myPanel.attach; list of tabs", arguments);
+      target.client.listTabs((response) => {
+        console.log("list of tabs", response);
 
-        let tab = response.tabs[response.selected];
-        let myActor = MyActorFront(client, tab);
+        // The actor might be already registered on the backend.
+        let currTab = response.tabs[response.selected];
+        if (currTab[MyActorFront.prototype.typeName]) {
+          console.log("actor already registered, so use it", currTab);
 
-        myActor.attach().then(() => {
-          myActor.hello().then(response => {
-            Trace.sysout("myPanel.connect; (from myActor): " +
-              response.msg, response);
+          this.attachActor(target, currTab);
+          return;
+        }
 
-            // Forward the hello message to the content scope.
-            this.content.postMessage(response);
-          })
-        });
+        // Register actor.
+        this.registerActor(target, response);
       });
     });
   },
 
-  onContentMessage: function(event) {
-    Trace.sysout("myPanel.onMessage; (from content): " +
-      event.data.content, event);
+  registerActor: function(target, response) {
+    if (Services.appinfo.browserTabsRemoteAutostart) {
+      return;
+    }
+
+    // The actor is registered as 'tab' actor (an instance created for
+    // every browser tab).
+    let options = {
+      prefix: "myactor",
+      constructor: "MyActor",
+      type: { tab: true }
+    };
+
+    let actorModuleUrl = self.data.url("../lib/myActor.js");
+
+    let registry = ActorRegistryFront(target.client, response);
+    registry.registerActor(actorModuleUrl, options).then(myActorClass => {
+      console.log("My actor registered");
+
+      // Remember, so we can unregister the actor later.
+      this.myActorClass = myActorClass;
+
+      target.client.listTabs(({ tabs, selected }) => {
+        this.attachActor(target, tabs[selected]);
+      });
+    });
   },
 
-  onLoad: function() {
-    Trace.sysout("myPanel.onLoad;");
-  }
+  attachActor: function(target, form) {
+    let myActor = MyActorFront(target.client, form);
+    myActor.attach().then(() => {
+      console.log("My actor attached", arguments);
+
+      // Finally, execute remote method on the actor!
+      myActor.hello().then(response => {
+        console.log("Response from the actor: " + response.msg, response);
+      });
+    });
+  },
 });
 
 function getToolbox(win) {
@@ -112,11 +123,6 @@ function getCurrentTab(win) {
     let browser = browserDoc.getElementById("content");
     return browser.selectedTab;
   }
-
-  // xxxHonza: do we really want this fall-back?
-  let browser = getMostRecentBrowserWindow();
-  if (browser)
-    return browser.gBrowser.mCurrentTab;
 }
 
 const myTool = new Tool({

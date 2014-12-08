@@ -3,14 +3,10 @@
 "use strict";
 
 const { Cc, Ci, Cu } = require("chrome");
-const { Trace } = require("./trace.js");
 const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
-const { ToolSidebar } = devtools["require"]("devtools/framework/sidebar");
 
 let protocol = devtools["require"]("devtools/server/protocol");
-let { method, RetVal } = protocol;
-
-const { reportException } = devtools["require"]("devtools/toolkit/DevToolsUtils");
+let { method, RetVal, ActorClass, FrontClass, Front, Actor } = protocol;
 
 /**
  * A method decorator that ensures the actor is in the expected state before
@@ -42,7 +38,7 @@ function expectState(expectedState, method) {
 /**
  * TODO: description
  */
-let MyActor = protocol.ActorClass({
+let MyActor = ActorClass({
   typeName: "myactor",
 
   get dbg() {
@@ -53,9 +49,7 @@ let MyActor = protocol.ActorClass({
   },
 
   initialize: function(conn, parent) {
-    protocol.Actor.prototype.initialize.call(this, conn);
-
-    Trace.sysout("myActor.initialize;", arguments);
+    Actor.prototype.initialize.call(this, conn);
 
     this.parent = parent;
     this.state = "detached";
@@ -63,21 +57,17 @@ let MyActor = protocol.ActorClass({
   },
 
   destroy: function() {
-    Trace.sysout("myActor.destroy;", arguments);
-
     if (this.state === "attached") {
       this.detach();
     }
 
-    protocol.Actor.prototype.destroy.call(this);
+    Actor.prototype.destroy.call(this);
   },
 
   /**
    * Attach to this actor.
    */
   attach: method(expectState("detached", function() {
-    Trace.sysout("myActor.attach;", arguments);
-
     this.dbg.addDebuggees();
     this.dbg.enabled = true;
     this.state = "attached";
@@ -92,8 +82,6 @@ let MyActor = protocol.ActorClass({
    * Detach from this actor.
    */
   detach: method(expectState("attached", function() {
-    Trace.sysout("myActor.detach;", arguments);
-
     this.dbg.removeAllDebuggees();
     this.dbg.enabled = false;
     this._dbg = null;
@@ -106,13 +94,9 @@ let MyActor = protocol.ActorClass({
   }),
 
   /**
-   * A test method.
-   *
-   * @returns object
+   * A test remote method.
    */
   hello: method(function() {
-    Trace.sysout("myActor.hello;", arguments);
-
     let result = {
       msg: "Hello from the backend!"
     };
@@ -126,13 +110,11 @@ let MyActor = protocol.ActorClass({
 
 exports.MyActor = MyActor;
 
-exports.MyActorFront = protocol.FrontClass(MyActor, {
+exports.MyActorFront = FrontClass(MyActor, {
   initialize: function(client, form) {
-    protocol.Front.prototype.initialize.call(this, client, form);
+    Front.prototype.initialize.call(this, client, form);
 
-    Trace.sysout("myActorFront.initialize;", arguments);
-
-    this.actorID = form.myactorActor;
+    this.actorID = form[MyActor.prototype.typeName];
     this.manage(this);
   }
 });
