@@ -4,6 +4,14 @@ Firefox DevTools Extension Examples
 This repository contains extensions for Firefox native developer tools
 showing how to build extensions and use existing platform API.
 
+Use [JPM](https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm)
+to run example extensions.
+
+Run with Firefox Nightly on OSX:
+
+`jpm run -b /Applications/FirefoxNightly.app`
+
+
 CustomTheme
 -----------
 This extension shows how to implement new theme for developer tools Toolbox.
