@@ -69,9 +69,12 @@ const MyPanel = Class({
   },
 
   registerActor: function(target, response) {
-    // TODO: support for e10s
     // Bug 1107888 - e10s support for dynamic actor registration
-    if (Services.appinfo.browserTabsRemoteAutostart) {
+    try {
+      if (Services.appinfo.browserTabsRemoteAutostart) {
+        devtools.require("devtools/server/actors/utils/actor-registry-utils");
+      }
+    } catch (err) {
       return;
     }
 
