@@ -1,6 +1,5 @@
 CustomActor
 ===========
-
 An example extension showing how to implement new remotable feature
 (based on RDP protocol, see link below)
 

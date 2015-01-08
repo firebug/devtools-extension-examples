@@ -1,6 +1,5 @@
 CustomTheme
 ===========
-
 An example extension showing how to create a new theme for developer tools.
 (based on SDK API)
 
@@ -20,5 +19,5 @@ Further Resources
 * Add-on SDK: https://developer.mozilla.org/en-US/Add-ons/SDK
 * DevTools API: https://developer.mozilla.org/en-US/docs/Tools/DevToolsAPI
 * Coding Style: https://github.com/mozilla/addon-sdk/wiki/Coding-style-guide
-* DevTools Extension Examples: https://github.com/mozilla/addon-sdk/tree/devtools/examples
+* DevTools Extension Examples: https://github.com/firebug/devtools-extension-examples
 * DevTools/Hacking: https://wiki.mozilla.org/DevTools/Hacking
