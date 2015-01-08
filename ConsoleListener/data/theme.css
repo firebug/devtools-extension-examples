@@ -1,0 +1,9 @@
+/* See license.txt for terms of usage */
+
+.custom-theme #devtools-theme-box {
+  background-color: red !important;
+}
+
+.custom-theme {
+  color: red !important;
+}

@@ -1,0 +1,10 @@
+{
+  "name": "consolelistener",
+  "title": "ConsoleListener",
+  "id": "consolelistener@getfirebug.com",
+  "description": "An example showing how to intercept and modify logs in the Console panel",
+  "author": "Jan Odvarko",
+  "license": "MPL 2.0",
+  "version": "0.1.0",
+  "main": "lib/main"
+}
