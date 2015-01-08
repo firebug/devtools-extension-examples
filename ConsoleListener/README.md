@@ -7,7 +7,8 @@ Instructions
 1. Install the extension
 2. Open developer tools toolbox (F12 or Menu -> Developer -> Toogle Tools)
 3. Select the Console panel
-4. TODO
+4. Load: https://getfirebug.com/tests/manual/console/joes-original/test.html
+5. Check out the Console panel, logs have different background color.
 
 Further Resources
 -----------------
