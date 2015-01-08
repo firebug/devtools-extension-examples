@@ -32,3 +32,12 @@ Related API:
     Actor
     ActorFront
     registerActor()
+
+ConsoleListener
+---------------
+This extension shows how to intercept and modify logs in the Console panel.
+
+Related Events:
+
+    `webconsole-ready`
+    `new-messages`
