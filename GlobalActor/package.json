@@ -1,0 +1,10 @@
+{
+  "name": "globalactor",
+  "title": "GlobalActor",
+  "id": "globalactor@getfirebug.com",
+  "description": "This extension shows how to register custom global actor",
+  "author": "Jan Odvarko",
+  "license": "MPL 2.0",
+  "version": "0.1.0",
+  "main": "lib/main"
+}
