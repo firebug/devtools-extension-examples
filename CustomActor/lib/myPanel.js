@@ -69,15 +69,6 @@ const MyPanel = Class({
   },
 
   registerActor: function(target, response) {
-    // Bug 1107888 - e10s support for dynamic actor registration
-    try {
-      if (Services.appinfo.browserTabsRemoteAutostart) {
-        devtools.require("devtools/server/actors/utils/actor-registry-utils");
-      }
-    } catch (err) {
-      return;
-    }
-
     // The actor is registered as 'tab' actor (an instance created for
     // every browser tab).
     let options = {
