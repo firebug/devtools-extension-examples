@@ -1,0 +1,10 @@
+{
+  "name": "helloreact",
+  "title": "HelloReact",
+  "id": "helloreact@getfirebug.com",
+  "description": "An example of an extension based on web technologies",
+  "author": "Jan Odvarko",
+  "license": "MPL 2.0",
+  "version": "0.1.0",
+  "main": "lib/main"
+}

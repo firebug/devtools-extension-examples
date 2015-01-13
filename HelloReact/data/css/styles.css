@@ -1,0 +1,18 @@
+/* See license.txt for terms of usage */
+
+body {
+  padding: 10px;
+  background-color: #F7FBFE;
+}
+
+.tab-content {
+  padding: 25px;
+  background-color: white;
+  border-bottom: 1px solid #DDD;
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+}
+
+a:focus {
+  outline: none;
+}
