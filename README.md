@@ -11,6 +11,22 @@ Run with Firefox Nightly on OSX:
 
 `jpm run -b /Applications/FirefoxNightly.app`
 
+HelloWorld
+----------
+This example shows basic architecture of an extension for Firefox developer
+tools. It handles basic toolbox initialization events and registers
+a new panel.
+
+Related API:
+
+    Panel
+    Tool
+
+Related Events:
+
+    `toolbox-ready`
+    `toolbox-destroy`
+    `toolbox-destroyed`
 
 CustomTheme
 -----------
@@ -25,13 +41,27 @@ CustomActor
 -----------
 This extension shows how to implement tools/features that can be used
 to debug/inspect remote devices. Learn how to properly implement both:
-the client and sever side of new tool.
+the client and sever side of new tool. Remotable feature in this extension
+is implemented as a `tab actor`.
 
 Related API:
 
     Actor
     ActorFront
-    registerActor()
+    registerTabActor()
+
+GlobalActor
+-----------
+This extension shows how to implement tools/features that can be used
+to debug/inspect remote devices. Learn how to properly implement both:
+the client and sever side of new tool. Remotable feature in this extension
+is implemented as a `global actor`.
+
+Related API:
+
+    Actor
+    ActorFront
+    registerGlobalActor()
 
 ConsoleListener
 ---------------
