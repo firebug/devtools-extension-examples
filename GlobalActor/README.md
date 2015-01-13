@@ -6,7 +6,7 @@ Instructions
 ------------
 1. Install the extension
 2. Open browser Console (Menu -> Developer -> Browser Console)
-3. Open a browser tabn and developer tools toolbox on it (F12)
+3. Open a browser tab and developer tools toolbox on it (F12)
 4. There should be a message in the browser Console saying:
 "Response from the actor: Hello from a global actor!"
 
