@@ -78,6 +78,6 @@ An example extension showing how to integrate standard web technologies
 with an extension.
 
 Related Libs:
-    * Bootstrap: http://getbootstrap.com/
-    * React: http://facebook.github.io/react/
-    * React Bootstrap: http://react-bootstrap.github.io/components.html
+* Bootstrap: http://getbootstrap.com/
+* React: http://facebook.github.io/react/
+* React Bootstrap: http://react-bootstrap.github.io/components.html
