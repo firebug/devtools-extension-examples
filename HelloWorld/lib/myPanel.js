@@ -13,7 +13,7 @@ const { Tool } = require("dev/toolbox");
  * This object represents a new {@Toolbox} panel
  */
 const MyPanel = Class(
-/** @lends BasePanel */
+/** @lends MyPanel */
 {
   extends: Panel,
 
