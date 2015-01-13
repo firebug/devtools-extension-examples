@@ -10,7 +10,7 @@ const { Class } = require("sdk/core/heritage");
 const { Tool } = require("dev/toolbox");
 
 /**
- * 
+ * This object represents a new {@Toolbox} panel
  */
 const MyPanel = Class(
 /** @lends BasePanel */
@@ -23,23 +23,26 @@ const MyPanel = Class(
   url: "./myPanel.html",
 
   /**
-   * 
+   * Executed by the framework when an instance of this panel is created.
+   * There is one instance of this panel per {@Toolbox}. The panel is
+   * instantiated when selected in the toolbox for the first time.
    */
   initialize: function(options) {
   },
 
   /**
-   * Executed by SDK framework for custom panels (not for overlays).
+   * Executed by the framework when the panel is destroyed.
    */
   dispose: function() {
-
   },
 
  /**
-  * 
+  * Executed by the framework when the panel content iframe is
+  * constructed. Allows e.g to connect the backend through
+  * `debuggee` object
   */
   setup: function(options) {
-
+    // TODO: connect to backend using options.debuggee
   },
 });
 
