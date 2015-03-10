@@ -90,6 +90,7 @@ An example extension showing how to communicate between chrome and
 content scopes.
 
 Related API:
+
     addMessageListener()
     removeMessageListener()
     sendAsyncMessage()
