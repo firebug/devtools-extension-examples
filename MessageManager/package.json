@@ -1,0 +1,10 @@
+{
+  "name": "messagemanager",
+  "title": "MessageManager",
+  "id": "messagemanager@getfirebug.com",
+  "description": "How to send messages between chrome and content scope",
+  "author": "Jan Odvarko",
+  "license": "New BSD",
+  "version": "0.1.0",
+  "main": "lib/main"
+}
