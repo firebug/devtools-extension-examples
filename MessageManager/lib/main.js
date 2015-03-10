@@ -2,7 +2,6 @@
 
 "use strict";
 
-const { MyExtension } = require("./myExtension.js");
 const { MyPanel } = require("./myPanel.js");
 
 /**
@@ -10,12 +9,9 @@ const { MyPanel } = require("./myPanel.js");
  * https://developer.mozilla.org/en-US/Add-ons/SDK
  */
 function main(options, callbacks) {
-  // Initialize extension object (singleton).
-  MyExtension.initialize(options);
 }
 
 function onUnload(reason) {
-  MyExtension.shutdown(reason);
 }
 
 // Exports from this module
