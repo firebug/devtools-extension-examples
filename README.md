@@ -83,3 +83,14 @@ Related Libs:
 * Bootstrap: http://getbootstrap.com/
 * React: http://facebook.github.io/react/
 * React Bootstrap: http://react-bootstrap.github.io/components.html
+
+MessageManager
+--------------
+An example extension showing how to communicate between chrome and
+content scopes.
+
+Related API:
+    addMessageListener()
+    removeMessageListener()
+    sendAsyncMessage()
+
