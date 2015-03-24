@@ -2,11 +2,18 @@
 
 "use strict";
 
+// Add-on SDK
 const { Cc, Ci, Cu } = require("chrome");
+const Events = require("sdk/event/core");
+
+// DevTools
 const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
 
+// xxxHonza: is this really required?
+devtools["require"]("devtools/server/actors/inspector");
+
 let protocol = devtools["require"]("devtools/server/protocol");
-let { method, RetVal, ActorClass, FrontClass, Front, Actor } = protocol;
+let { method, ActorClass, FrontClass, Front, Actor, Arg } = protocol;
 
 /**
  * A method decorator that ensures the actor is in the expected state before
@@ -41,11 +48,24 @@ function expectState(expectedState, method) {
 let MyActor = ActorClass({
   typeName: "myactor",
 
+  /**
+   * Events emitted by this actor.
+   */
+  events: {
+    "click": {
+      type: "click",
+      target: Arg(0, "domnode")
+    }
+  },
+
   initialize: function(conn, parent) {
     Actor.prototype.initialize.call(this, conn);
 
     this.parent = parent;
     this.state = "detached";
+
+    this.onNavigate = this.onNavigate.bind(this);
+    this.onClick = this.onClick.bind(this);
   },
 
   destroy: function() {
@@ -59,10 +79,17 @@ let MyActor = ActorClass({
   /**
    * Attach to this actor.
    */
-  attach: method(expectState("detached", function() {
+  attach: method(expectState("detached", function(walkerActorID) {
+    this.walkerActorID = walkerActorID;
     this.state = "attached";
+
+    Events.on(this.parent, "navigate", this.onNavigate);
+
+    this.registerEventHandler();
   }), {
-    request: {},
+    request: {
+      walkerActorID: Arg(0, "string"),
+    },
     response: {
       type: "attached"
     }
@@ -79,6 +106,34 @@ let MyActor = ActorClass({
       type: "detached"
     }
   }),
+
+  /**
+   * Page navigation handler.
+   */
+  onNavigate: function({isTopLevel}) {
+    this.registerEventHandler();
+  },
+
+  registerEventHandler: function() {
+    let win = this.parent.window;
+    win.addEventListener("click", this.onClick, true);
+  },
+
+  onClick: function(event) {
+    let threadActor = this.parent.threadActor;
+    let walkerActor = this.conn.getActor(this.walkerActorID);
+    if (!walkerActor) {
+      return;
+    }
+
+    let result = walkerActor.attachElement(event.target);
+    let nodeActor = result.node;
+
+    // Send the click event to the client.
+    Events.emit(this, "click", {
+      target: nodeActor,
+    });
+  }
 });
 
 exports.MyActor = MyActor;
@@ -91,3 +146,5 @@ exports.MyActorFront = FrontClass(MyActor, {
     this.manage(this);
   }
 });
+
+// Exports from this module
