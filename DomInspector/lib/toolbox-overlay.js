@@ -91,7 +91,7 @@ const ToolboxOverlay = Class(
   // Actor Events
 
   onClick: function(nodeFront) {
-    console.log("!!! onClick;", nodeFront);
+    console.log("Click event from the backend!", nodeFront);
   }
 });
 

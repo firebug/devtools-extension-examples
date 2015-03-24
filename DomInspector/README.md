@@ -6,7 +6,10 @@ Instructions
 ------------
 1. Install the extension
 2. Open developer tools toolbox (F12 or Menu -> Developer -> Toogle Tools)
-3. TODO
+3. Open Browser Console (Menu -> Developer -> Browser Console)
+4. Click into the page content. You should see the following message:
+   "Click event from the backend!" + an object that represents the clicked
+   target element (aka Front object).
  
 Further Resources
 -----------------
