@@ -95,3 +95,20 @@ Related API:
     removeMessageListener()
     sendAsyncMessage()
 
+DOM Inspector
+-------------
+An example extension showing how to send DOM node from the backed to
+the client.
+
+Related API:
+
+    Actor
+    registerTabActor()
+    Actor Events
+    NodeFront
+
+Related Events:
+
+    `toolbox-ready`
+    `toolbox-destroy`
+
