@@ -14,6 +14,7 @@ const { Class } = require("sdk/core/heritage");
 // DevTools
 const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
 const { ActorRegistryFront } = devtools["require"]("devtools/server/actors/actor-registry");
+const { console } = Cu.import("resource://gre/modules/devtools/Console.jsm", {});
 
 // DOM Inspector
 const { MyActorFront } = require("./my-actor");
@@ -73,7 +74,7 @@ const ToolboxOverlay = Class(
             let walker = this.toolbox.walker;
 
             // Attach to the custom actor.
-            myActor.attach(walker.actorID).then(() => {
+            myActor.attach(walker).then(() => {
               console.log("My actor attached!");
             });
           });
@@ -90,8 +91,8 @@ const ToolboxOverlay = Class(
 
   // Actor Events
 
-  onClick: function(nodeFront) {
-    console.log("Click event from the backend!", nodeFront);
+  onClick: function(clickedNodeData) {
+    console.log("Click event from the backend!", clickedNodeData.node);
   }
 });
 

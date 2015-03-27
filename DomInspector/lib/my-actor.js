@@ -54,7 +54,7 @@ let MyActor = ActorClass({
   events: {
     "click": {
       type: "click",
-      target: Arg(0, "domnode")
+      node: Arg(0, "disconnectedNode"),
     }
   },
 
@@ -126,13 +126,10 @@ let MyActor = ActorClass({
       return;
     }
 
-    let result = walkerActor.attachElement(event.target);
-    let nodeActor = result.node;
+    let data = walkerActor.attachElement(event.target);
 
     // Send the click event to the client.
-    Events.emit(this, "click", {
-      target: nodeActor,
-    });
+    Events.emit(this, "click", data);
   }
 });
 
@@ -144,6 +141,15 @@ exports.MyActorFront = FrontClass(MyActor, {
 
     this.actorID = form[MyActor.prototype.typeName];
     this.manage(this);
+  },
+
+  attach: protocol.custom(function(walkerFront) {
+    this.walkerFront = walkerFront;
+    return this._attach(this.walkerFront.actorID);
+  }, {impl: "_attach"}),
+
+  ensureParentFront: function(...args) {
+    this.walkerFront.ensureParentFront.apply(this.walkerFront, args);
   }
 });
 
