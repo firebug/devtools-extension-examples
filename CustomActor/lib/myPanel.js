@@ -47,24 +47,20 @@ const MyPanel = Class({
    */
   connect: function() {
     let target = this.toolbox.target;
-    target.activeTab.attachThread({}, (response, threadClient) => {
-      console.log("threadClient attached", response);
+    target.client.listTabs((response) => {
+      console.log("list of tabs", response);
 
-      target.client.listTabs((response) => {
-        console.log("list of tabs", response);
+      // The actor might be already registered on the backend.
+      let currTab = response.tabs[response.selected];
+      if (currTab[MyActorFront.prototype.typeName]) {
+        console.log("actor already registered, so use it", currTab);
 
-        // The actor might be already registered on the backend.
-        let currTab = response.tabs[response.selected];
-        if (currTab[MyActorFront.prototype.typeName]) {
-          console.log("actor already registered, so use it", currTab);
+        this.attachActor(target, currTab);
+        return;
+      }
 
-          this.attachActor(target, currTab);
-          return;
-        }
-
-        // Register actor.
-        this.registerActor(target, response);
-      });
+      // Register actor.
+      this.registerActor(target, response);
     });
   },
 
