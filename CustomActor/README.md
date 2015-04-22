@@ -1,7 +1,7 @@
 CustomActor
 ===========
 An example extension showing how to implement new remotable feature
-(based on RDP protocol, see link below)
+and register custom tab actor (based on RDP protocol, see link below)
 
 Instructions
 ------------
