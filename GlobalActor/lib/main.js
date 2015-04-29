@@ -61,7 +61,11 @@ function registerActor(target, response) {
 
   let actorModuleUrl = self.data.url("../lib/myActor.js");
 
-  let registry = ActorRegistryFront(target.client, response);
+  let registry = target.client.getActor(response["actorRegistryActor"]);
+  if (!registry) {
+    registry = ActorRegistryFront(target.client, response);
+  }
+
   registry.registerActor(actorModuleUrl, options).then(actorRegistrar => {
     console.log("My global actor registered");
 
