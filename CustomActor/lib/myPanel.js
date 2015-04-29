@@ -10,7 +10,7 @@ const { Tool } = require("dev/toolbox");
 const { Class } = require("sdk/core/heritage");
 const { MyActorFront } = require("./myActor.js");
 const { viewFor } = require("sdk/view/core");
-const { MessagePort, MessageChannel } = require("sdk/messaging");
+const { MessageChannel } = require("sdk/messaging");
 
 const { gDevTools } = Cu.import("resource:///modules/devtools/gDevTools.jsm", {});
 const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
