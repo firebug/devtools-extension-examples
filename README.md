@@ -39,19 +39,6 @@ Related API:
     gDevTools.registerTheme()
     gDevTools.unregisterTheme()
 
-CustomActor
------------
-This extension shows how to implement tools/features that can be used
-to debug/inspect remote devices. Learn how to properly implement both:
-the client and sever side of new tool. Remotable feature in this extension
-is implemented as a `tab actor`.
-
-Related API:
-
-    Actor
-    ActorFront
-    registerTabActor()
-
 GlobalActor
 -----------
 This extension shows how to implement tools/features that can be used
@@ -64,6 +51,18 @@ Related API:
     Actor
     ActorFront
     registerGlobalActor()
+
+TabActor
+-----------
+This extension shows how to create a tab actor. If multiprocess support
+is active tab actors run within the child process (global actors run
+within the parent process).
+
+Related API:
+
+    Actor
+    ActorFront
+    registerTabActor()
 
 ConsoleListener
 ---------------
@@ -111,4 +110,17 @@ Related Events:
 
     `toolbox-ready`
     `toolbox-destroy`
+
+CustomActor
+-----------
+This extension shows how to implement tools/features that can be used
+to debug/inspect remote devices. Learn how to properly implement both:
+the client and sever side of new tool. Remotable feature in this extension
+is implemented as a `tab actor`.
+
+Related API:
+
+    Actor
+    ActorFront
+    registerTabActor()
 
