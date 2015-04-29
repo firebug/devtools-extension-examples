@@ -48,7 +48,6 @@ const MyPanel = Class({
   connect: function() {
     let target = this.toolbox.target;
     target.client.listTabs((response) => {
-      console.log("list of tabs", response);
 
       // The actor might be already registered on the backend.
       let currTab = response.tabs[response.selected];
@@ -75,7 +74,11 @@ const MyPanel = Class({
 
     let actorModuleUrl = self.data.url("../lib/myActor.js");
 
-    let registry = ActorRegistryFront(target.client, response);
+    let registry = target.client.getActor(response["actorRegistryActor"]);
+    if (!registry) {
+      registry = ActorRegistryFront(target.client, response);
+    }
+
     registry.registerActor(actorModuleUrl, options).then(myActorClass => {
       console.log("My actor registered");
 
@@ -91,7 +94,7 @@ const MyPanel = Class({
   attachActor: function(target, form) {
     let myActor = MyActorFront(target.client, form);
     myActor.attach().then(() => {
-      console.log("My actor attached", arguments);
+      console.log("My actor attached");
 
       // Finally, execute remote method on the actor!
       myActor.hello().then(response => {
