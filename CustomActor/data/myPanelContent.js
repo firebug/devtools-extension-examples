@@ -29,7 +29,7 @@ Connection.prototype = {
     // to the Debuggee and Chrome scope.
     return new Promise((resolve, reject) => {
       this.win.addEventListener("message", event => {
-        console.log("connection.initialize; " + event.data, event);
+        console.log("connection.initialize; ", event);
 
         this.debuggee = event.ports[0];
         this.chrome = event.ports[1];

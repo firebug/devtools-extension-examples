@@ -10,6 +10,7 @@ const { Tool } = require("dev/toolbox");
 const { Class } = require("sdk/core/heritage");
 const { MyActorFront } = require("./myActor.js");
 const { viewFor } = require("sdk/view/core");
+const { MessagePort, MessageChannel } = require("sdk/messaging");
 
 const { gDevTools } = Cu.import("resource:///modules/devtools/gDevTools.jsm", {});
 const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
@@ -30,16 +31,37 @@ const MyPanel = Class({
     let parentWin = frame.ownerDocument.defaultView;
 
     this.toolbox = getToolbox(parentWin);
+    this.debuggee = debuggee;
   },
 
   dispose: function() {
     if (this.myActorClass) {
       this.myActorClass.unregister();
     }
+    this.debuggee = null;
   },
 
   onReady: function() {
+    const { port1, port2 } = new MessageChannel();
+    this.content = port1;
+
+    // Listen for messages sent from the panel content.
+    this.content.onmessage = this.onContentMessage.bind(this);
+
+    // Start up channels
+    this.content.start();
+    this.debuggee.start();
+
+    // Pass channels to the panel content scope (myPanelContent.js).
+    // The content scope can send messages back to the chrome or
+    // directly to the debugger server.
+    this.postMessage("initialize", [this.debuggee, port2]);
+
     this.connect();
+  },
+
+  onContentMessage: function(event) {
+    console.log("onContentMessage: " + event.data.content);
   },
 
   /**
