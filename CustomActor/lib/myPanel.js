@@ -35,9 +35,7 @@ const MyPanel = Class({
   },
 
   dispose: function() {
-    if (this.myActorClass) {
-      this.myActorClass.unregister();
-    }
+    this.disconnect();
     this.debuggee = null;
   },
 
@@ -56,33 +54,56 @@ const MyPanel = Class({
     // The content scope can send messages back to the chrome or
     // directly to the debugger server.
     this.postMessage("initialize", [this.debuggee, port2]);
-
-    this.connect();
   },
 
   onContentMessage: function(event) {
-    console.log("onContentMessage: " + event.data.content);
+    console.log("onContentMessage", event);
+
+    switch (event.data.type) {
+    case "connect":
+      this.connect();
+      break;
+    case "disconnect":
+      this.disconnect();
+      break;
+    }
   },
 
   /**
    * Connect to our custom {@MyActor} actor.
    */
   connect: function() {
+    console.log("Connect to the backend actor; " + this.myActorClass);
+
     let target = this.toolbox.target;
     target.client.listTabs((response) => {
 
       // The actor might be already registered on the backend.
-      let currTab = response.tabs[response.selected];
-      if (currTab[MyActorFront.prototype.typeName]) {
-        console.log("actor already registered, so use it", currTab);
+      let tab = response.tabs[response.selected];
+      if (tab[MyActorFront.prototype.typeName]) {
+        console.log("actor already registered, so use it", tab);
 
-        this.attachActor(target, currTab);
+        this.attachActor(target, tab);
         return;
       }
 
       // Register actor.
       this.registerActor(target, response);
     });
+  },
+
+  /**
+   * Disconnect to our custom {@MyActor} actor.
+   */
+  disconnect: function() {
+    console.log("Disconnect from the backend actor; " + this.myActorClass);
+
+    if (this.myActorClass) {
+      this.myActorClass.unregister();
+      this.myActorClass = null;
+
+      this.content.postMessage("unregistered");
+    }
   },
 
   registerActor: function(target, response) {
@@ -107,6 +128,9 @@ const MyPanel = Class({
       // Remember, so we can unregister the actor later.
       this.myActorClass = myActorClass;
 
+      // Post message to the panel content.
+      this.content.postMessage("registered");
+
       target.client.listTabs(({ tabs, selected }) => {
         this.attachActor(target, tabs[selected]);
       });
@@ -118,9 +142,13 @@ const MyPanel = Class({
     myActor.attach().then(() => {
       console.log("My actor attached");
 
+      this.content.postMessage("attached");
+
       // Finally, execute remote method on the actor!
       myActor.hello().then(response => {
         console.log("Response from the actor: " + response.msg, response);
+
+        this.content.postMessage(response.msg);
       });
     });
   },

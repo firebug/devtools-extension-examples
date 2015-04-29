@@ -8,10 +8,21 @@
 <style type="text/css">
 body {
   background-color: white;
-  margin: 0;
+  margin: 10px;
 }
 </style>
 <body>
+<button onClick="onRegisterActor()">Register Actor</button>
+<button onClick="onUnregisterActor()">Unregister Actor</button>
 <div id="content"></div>
+<script type="text/javascript">
+function onRegisterActor() {
+  connection.sendChromeMessage({type: "connect"});
+}
+
+function onUnregisterActor() {
+  connection.sendChromeMessage({type: "disconnect"});
+}
+</script>
 </body>
 </html>

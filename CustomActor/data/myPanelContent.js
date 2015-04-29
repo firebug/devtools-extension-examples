@@ -72,10 +72,10 @@ Connection.prototype = {
   onDebuggeeMessage: function(event) {
     console.log("connection.onDebuggeeMessage", event);
 
-    var parentNode = this.doc.getElementById("content");
+    /*var parentNode = this.doc.getElementById("content");
     var item = this.doc.createElement("pre");
     item.textContent = JSON.stringify(event.data, 2, 2);
-    parentNode.appendChild(item);
+    parentNode.appendChild(item);*/
   },
 
   /**
