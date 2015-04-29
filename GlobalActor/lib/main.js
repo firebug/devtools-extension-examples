@@ -37,23 +37,16 @@ function onUnload(reason) {
  */
 function onToolboxReady(event, toolbox) {
   let target = toolbox.target;
-  target.activeTab.attachThread({}, (response, threadClient) => {
-    console.log("threadClient attached", response);
+  let response = target.form;
+  target.client.listTabs(response => {
+    // The actor might be already registered on the backend.
+    if (response[MyActorFront.prototype.typeName]) {
+      attachActor(target, response);
+      return;
+    }
 
-    target.client.listTabs(response => {
-      console.log("list of tabs", response);
-
-      // The actor might be already registered on the backend.
-      if (response[MyActorFront.prototype.typeName]) {
-        console.log("actor already registered, so use it", response);
-
-        attachActor(target, response);
-        return;
-      }
-
-      // Register actor.
-      registerActor(target, response);
-    });
+    // Register actor.
+    registerActor(target, response);
   });
 }
 
@@ -70,7 +63,7 @@ function registerActor(target, response) {
 
   let registry = ActorRegistryFront(target.client, response);
   registry.registerActor(actorModuleUrl, options).then(actorRegistrar => {
-    console.log("My actor registered");
+    console.log("My global actor registered");
 
     // Remember, so we can unregister the actor later.
     myActorRegistrar = actorRegistrar;

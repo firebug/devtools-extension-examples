@@ -45,7 +45,7 @@ let MyActor = ActorClass({
   initialize: function(conn, parent) {
     Actor.prototype.initialize.call(this, conn);
 
-    console.log("myActor.initialize");
+    console.log("myGlobalActor.initialize");
 
     this.parent = parent;
     this.state = "detached";
