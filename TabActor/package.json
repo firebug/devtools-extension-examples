@@ -1,0 +1,10 @@
+{
+  "name": "tabactor",
+  "title": "TabActor",
+  "id": "tabactor@getfirebug.com",
+  "description": "This extension shows how to register custom tab actor",
+  "author": "Jan Odvarko",
+  "license": "MPL 2.0",
+  "version": "0.1.0",
+  "main": "lib/main"
+}
