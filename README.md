@@ -113,14 +113,15 @@ Related Events:
 
 CustomActor
 -----------
-This extension shows how to implement tools/features that can be used
-to debug/inspect remote devices. Learn how to properly implement both:
-the client and sever side of new tool. Remotable feature in this extension
-is implemented as a `tab actor`.
+This extension shows how to implement backend actor register and
+unregister it. Learn how to properly implement both the client and sever
+side. This example also shows how to communicate between chrome and content
+scope through MessageChannel.
 
 Related API:
 
     Actor
     ActorFront
     registerTabActor()
+    MessageChannel()
 

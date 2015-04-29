@@ -2,15 +2,17 @@ CustomActor
 ===========
 An example extension showing how to implement new remotable feature
 and register custom tab actor (based on RDP protocol, see link below)
+This example also shows how to communicate between chrome and content
+scope through MessageChannel.
 
 Instructions
 ------------
 1. Install the extension
 2. Open developer tools toolbox (F12 or Menu -> Developer -> Toogle Tools)
 3. Select the 'My Panel' panel
-4. Open browser Console (Menu -> Developer -> Browser Console)
-5. You should see a message send from the backend (can be a mobile device):
-"Response from the actor: Hello from the backend!"
+4. Click on 'Register Actor' button in the Panel.
+6. You should see the following messages: 'registered', 'attached' and
+'Hello from the backend!'
 
 Further Resources
 -----------------
