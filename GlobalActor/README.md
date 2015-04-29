@@ -1,6 +1,8 @@
 GlobalActor
 ===========
-An example extension showing how to register custom Global actor
+An example extension showing how to register custom Global actor.
+If multiprocess support is activated it runs within the parent
+process.
 
 Instructions
 ------------
@@ -12,6 +14,7 @@ Instructions
 
 Further Resources
 -----------------
+* Tab Actor: https://github.com/firebug/devtools-extension-examples/tree/master/TabActor
 * RDP: https://wiki.mozilla.org/Remote_Debugging_Protocol
 * Add-on SDK: https://developer.mozilla.org/en-US/Add-ons/SDK
 * DevTools API: https://developer.mozilla.org/en-US/docs/Tools/DevToolsAPI

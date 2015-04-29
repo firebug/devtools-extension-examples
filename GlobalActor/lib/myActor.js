@@ -39,7 +39,7 @@ function expectState(expectedState, method) {
 /**
  * Custom actor object
  */
-let MyActor = ActorClass({
+let MyGlobalActor = ActorClass({
   typeName: "myglobalactor",
 
   initialize: function(conn, parent) {
@@ -98,13 +98,13 @@ let MyActor = ActorClass({
   }),
 });
 
-exports.MyActor = MyActor;
+exports.MyGlobalActor = MyGlobalActor;
 
-exports.MyActorFront = FrontClass(MyActor, {
+exports.MyGlobalActorFront = FrontClass(MyGlobalActor, {
   initialize: function(client, form) {
     Front.prototype.initialize.call(this, client, form);
 
-    this.actorID = form[MyActor.prototype.typeName];
+    this.actorID = form[MyGlobalActor.prototype.typeName];
     this.manage(this);
   }
 });

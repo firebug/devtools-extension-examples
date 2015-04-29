@@ -6,7 +6,7 @@ var self = require("sdk/self");
 
 const { Cu, Ci } = require("chrome");
 const { gDevTools } = Cu.import("resource:///modules/devtools/gDevTools.jsm", {});
-const { MyActorFront } = require("./myActor.js");
+const { MyGlobalActorFront } = require("./myActor.js");
 
 const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
 const { ActorRegistryFront } = devtools["require"]("devtools/server/actors/actor-registry");
@@ -40,7 +40,7 @@ function onToolboxReady(event, toolbox) {
   let response = target.form;
   target.client.listTabs(response => {
     // The actor might be already registered on the backend.
-    if (response[MyActorFront.prototype.typeName]) {
+    if (response[MyGlobalActorFront.prototype.typeName]) {
       attachActor(target, response);
       return;
     }
@@ -51,11 +51,11 @@ function onToolboxReady(event, toolbox) {
 }
 
 function registerActor(target, response) {
-  // The actor is registered as 'global' actor (one instance created for
-  // the browser).
+  // The actor is registered as 'global' actor (runs
+  // within the parent process)
   let options = {
-    prefix: MyActorFront.prototype.typeName,
-    constructor: "MyActor",
+    prefix: MyGlobalActorFront.prototype.typeName,
+    constructor: "MyGlobalActor",
     type: { global: true }
   };
 
@@ -75,7 +75,7 @@ function registerActor(target, response) {
 }
 
 function attachActor(target, form) {
-  let myActor = MyActorFront(target.client, form);
+  let myActor = MyGlobalActorFront(target.client, form);
   myActor.attach().then(() => {
     // Finally, execute remote method on the actor!
     myActor.hello().then(response => {
