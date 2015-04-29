@@ -98,6 +98,15 @@ const MyPanel = Class({
   disconnect: function() {
     console.log("Disconnect from the backend actor; " + this.myActorClass);
 
+    // Unregistration isn't done right, see also:
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1146889
+    // If an actor is unregistered and then immediately registered
+    // there is the following exception:
+    // Error: Wrong State: Expected 'detached', but current state is 'attached'
+    // It's because the existing actor instance in the server side pool
+    // isn't removed during the unregistration process.
+    // The user needs to close and open the toolbox to re-establish
+    // connection (to ensure clean actor pools).
     if (this.myActorClass) {
       this.myActorClass.unregister();
       this.myActorClass = null;
