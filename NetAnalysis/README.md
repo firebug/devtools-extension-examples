@@ -22,4 +22,9 @@ Further Resources
 * DevTools/Hacking: https://wiki.mozilla.org/DevTools/Hacking
 
 
+Screenshot
+----------
+The following screenshot shows the additional button that can perform
+analysis similarly to what e.g. the well known YSlow extension does.
+
 ![](https://raw.githubusercontent.com/firebug/devtools-extension-examples/master/NetAnalysis/docs/images/yslow-button.png)
