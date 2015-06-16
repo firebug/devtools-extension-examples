@@ -20,3 +20,6 @@ Further Resources
 * HAR Builder: https://github.com/mozilla/gecko-dev/blob/master/browser/devtools/netmonitor/har/har-builder.js
 * DevTools API: https://developer.mozilla.org/en-US/docs/Tools/DevToolsAPI
 * DevTools/Hacking: https://wiki.mozilla.org/DevTools/Hacking
+
+
+![](https://raw.githubusercontent.com/firebug/devtools-extension-examples/master/NetAnalysis/docs/images/yslow-button.png)
