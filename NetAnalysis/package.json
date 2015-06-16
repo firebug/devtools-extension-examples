@@ -1,0 +1,13 @@
+{
+  "name": "netanalysis",
+  "title": "Net Analysis",
+  "id": "netanalysis@janodvarko.cz",
+  "version": "0.0.1",
+  "description": "How to get HAR object from the Network panel and perform custom analysis",
+  "main": "lib/main.js",
+  "author": "Jan Odvarko",
+  "engines": {
+    "firefox": ">=41"
+  },
+  "license": "New BSD License"
+}
