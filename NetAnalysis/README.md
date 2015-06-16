@@ -26,5 +26,7 @@ Screenshot
 ----------
 The following screenshot shows the additional button that can perform
 analysis similarly to what e.g. the well known YSlow extension does.
+The screenshot is taken from Firefox native DevTools with Firebug
+theme activated.
 
 ![](https://raw.githubusercontent.com/firebug/devtools-extension-examples/master/NetAnalysis/docs/images/yslow-button.png)
