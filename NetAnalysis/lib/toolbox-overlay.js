@@ -5,7 +5,7 @@
 const { Cu, Ci } = require("chrome");
 const { gDevTools } = Cu.import("resource:///modules/devtools/gDevTools.jsm", {});
 const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
-const { HarExporter } = devtools.require("devtools/netmonitor/har/har-exporter.js");
+const { HarExporter } = devtools["require"]("devtools/netmonitor/har/har-exporter.js");
 const { console } = Cu.import("resource://gre/modules/devtools/Console.jsm", {});
 
 /**
