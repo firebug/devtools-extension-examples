@@ -42,8 +42,16 @@ const MyPanel = Class(
   * `debuggee` object
   */
   setup: function(options) {
+    console.log("MyPanel.setup" + options.debuggee);
+
+    this.debuggee = options.debuggee;
+
     // TODO: connect to backend using options.debuggee
   },
+
+  onReady: function() {
+    console.log("MyPanel.onReady " + this.debuggee);
+  }
 });
 
 const myTool = new Tool({
