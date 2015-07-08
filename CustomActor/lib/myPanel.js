@@ -174,8 +174,19 @@ function getToolbox(win) {
 function getCurrentTab(win) {
   if (win) {
     let browserDoc = win.top.document;
+
+    // The browser (id='content') is null in case the Toolbox is
+    // detached from the main browser window.
     let browser = browserDoc.getElementById("content");
-    return browser.selectedTab;
+    if (browser) {
+      return browser.selectedTab;
+    }
+  }
+
+  // Get the last active browser window and the current tab in it.
+  let browser = getMostRecentBrowserWindow();
+  if (browser) {
+    return browser.gBrowser.mCurrentTab;
   }
 }
 
