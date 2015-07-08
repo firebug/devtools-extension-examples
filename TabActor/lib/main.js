@@ -37,12 +37,20 @@ function onUnload(reason) {
  */
 function onToolboxReady(event, toolbox) {
   let target = toolbox.target;
-  let response = target.form;
+
+  console.log("New toolbox ready, let's register a tab actor for it. " +
+    target.url);
+
+  // Response is stored on the target and can be reused to avoid
+  // additional listTabs. Supported from Fx? FIXME
+  // let response = target.form;
   target.client.listTabs(response => {
     let tab = response.tabs[response.selected];
 
     // The actor might be already registered on the backend.
     if (tab[MyTabActorFront.prototype.typeName]) {
+      console.log("My tab actor is already registered, attach to it");
+
       attachActor(target, tab);
       return;
     }
@@ -69,7 +77,7 @@ function registerActor(target, response) {
   }
 
   registry.registerActor(actorModuleUrl, options).then(actorRegistrar => {
-    console.log("My tab actor registered");
+    console.log("My tab actor is now registered");
 
     // Remember, so we can unregister the actor later.
     myActorRegistrar = actorRegistrar;
@@ -84,6 +92,8 @@ function registerActor(target, response) {
 function attachActor(target, form) {
   let myActor = MyTabActorFront(target.client, form);
   myActor.attach().then(() => {
+    console.log("My actor is now attached");
+
     // Finally, execute remote method on the actor!
     myActor.hello().then(response => {
       console.log("Response from the actor: " + response.msg, response);
