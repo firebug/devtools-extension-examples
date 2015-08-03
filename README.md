@@ -137,3 +137,12 @@ Related API:
     HARBuilder
     HARExporter
     ToolboxOverlay
+
+
+Further Resources
+=================
+* Add-on SDK: https://developer.mozilla.org/en-US/Add-ons/SDK
+* Add-on SDK Coding Style: https://github.com/mozilla/addon-sdk/wiki/Coding-style-guide
+* DevTools API: https://developer.mozilla.org/en-US/docs/Tools/DevToolsAPI
+* DevTools Extension Examples: https://github.com/firebug/devtools-extension-examples
+* Hacking on core DevTools: https://wiki.mozilla.org/DevTools/Hacking
