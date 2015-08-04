@@ -138,6 +138,20 @@ Related API:
     HARExporter
     ToolboxOverlay
 
+NetAnalysis
+-----------
+An example extension showing how to access 'window' global
+in the web page and also register new Console command-line
+commands.
+
+Related API:
+
+    Actor
+    registerTabActor()
+    Toolbox Events
+    WebConsoleCommands
+    ToolboxOverlay
+
 
 Further Resources
 =================
