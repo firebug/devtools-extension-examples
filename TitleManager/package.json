@@ -1,0 +1,10 @@
+{
+  "name": "titlemanager",
+  "title": "TitleManager",
+  "id": "titlemanager@getfirebug.com",
+  "description": "This example extension allows to get/set window title",
+  "author": "Jan Odvarko",
+  "license": "MPL 2.0",
+  "version": "0.1.0",
+  "main": "lib/main"
+}
