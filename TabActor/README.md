@@ -1,5 +1,5 @@
 TabActor
-===========
+========
 An example extension showing how to register custom Tab actor.
 Instance of a tab actor is created for every browser tab.
 If multiprocess support is activated it runs within the child
