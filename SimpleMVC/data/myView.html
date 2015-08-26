@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="myView.css" rel="stylesheet">
+    <script src="myView.js" type="application/javascript"></script>
+  </head>
+  <body>
+    <p>This example extension shows how to use <code>Model View Controller</code> (MVC) pattern
+       in context of an extension for Firefox DevTools. It also demonstrates how to
+       connect all components of the pattern together through events.</p>
+    <p>Use case:
+    <ol>
+    <li>Clicking on the button below generates standard click event handled
+    by this <code>View</code> (myView.html).</li>
+    <li>The event is forwarded throug a message manager to <code>Controller</code>
+    living in the chrome scope (myPanel.js) together with current time [ms] as a payload.</li>
+    <li>When the time arrives to the Controller it's further passed to <code>Model</code>
+    (myExtension.js, also living in the chrome scope) to nicely format it.</li>
+    <li>The formatted string is sent back to this View (through
+    message manager to the content scope and finally as DOM event to the View)</li>
+    </ol>
+    <p><i>
+    Checkout the Browser Console for logs.
+    </i></p>
+    <p>
+    <button id="my-button" onClick="onClick()">Click Me!</button>
+    </p>
+    <div id="content"></div>
+  </body>
+</html>

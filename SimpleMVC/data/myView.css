@@ -1,0 +1,24 @@
+/* See license.txt for terms of usage */
+
+body {
+  background-color: white;
+  font-size: 12px;
+  font-family: Lucida Grande, Tahoma, sans-serif;
+  line-height: 15px;
+}
+
+code {
+  font-family: monospace;
+  background: rgb(249, 249, 249);
+  padding: 1px;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+}
+
+#content {
+  padding-top: 7px;
+}
+
+.time {
+  color: green;
+}

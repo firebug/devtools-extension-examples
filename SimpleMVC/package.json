@@ -1,0 +1,10 @@
+{
+  "name": "simplemvc",
+  "title": "SimpleMVC",
+  "id": "simplemvc@getfirebug.com",
+  "description": "This example extension shows how to use Model View Controller (MVC) pattern in context of an extension for Firefox DevTools",
+  "author": "Jan Odvarko",
+  "license": "MPL 2.0",
+  "version": "0.1.0",
+  "main": "lib/main"
+}
