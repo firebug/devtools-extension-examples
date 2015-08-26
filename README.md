@@ -152,6 +152,20 @@ Related API:
     WebConsoleCommands
     ToolboxOverlay
 
+SimpleMVC
+-----------
+An example extension showing how to use Model View Controller (MVC) pattern
+in context of an extension for Firefox DevTools.
+(based on HelloWorld example above)
+
+Related API:
+
+    Panel
+    Tool
+    MessageManager
+    Frame script
+    Mode View Controller
+    Chromd & Content scope communication
 
 Further Resources
 =================
