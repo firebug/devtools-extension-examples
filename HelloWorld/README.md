@@ -1,6 +1,6 @@
 Hello World
 ===========
-An example extension showing how to create a new pane for Firefox native
+An example extension showing how to create a new panel for Firefox native
 developer tools toolbox.
 
 Instructions
