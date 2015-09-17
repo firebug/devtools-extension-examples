@@ -15,8 +15,11 @@ const protocol = devtools["require"]("devtools/server/protocol");
 const { method, RetVal, ActorClass, FrontClass, Front, Actor, Arg } = protocol;
 
 // Bug 1203802 - Websocket Frame Listener API for devtool Network Inspector
-const webSocketService = Cc["@mozilla.org/websocketframe/service;1"].
-  getService(Ci.nsIWebSocketFrameService);
+try {
+  const webSocketService = Cc["@mozilla.org/websocketframe/service;1"].
+    getService(Ci.nsIWebSocketFrameService);
+} catch (err) {
+}
 
 /**
  * Custom actor object
