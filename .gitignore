@@ -29,7 +29,7 @@
 *.xpi
 
 # Files from NPM
-/node_modules/
+node_modules/
 
 # Extensions
 /firebug@software.joehewitt.com
