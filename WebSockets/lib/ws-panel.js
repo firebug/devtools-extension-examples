@@ -59,7 +59,7 @@ const WsPanel = Class(
   * `debuggee` object
   */
   setup: function(options) {
-    console.log("WsPanel.setup" + options.debuggee, options);
+    console.log("WsPanel.setup;", options);
 
     this.debuggee = options.debuggee;
     this.panelFrame = viewFor(this);
@@ -69,7 +69,7 @@ const WsPanel = Class(
   },
 
   onReady: function() {
-    console.log("WsPanel.onReady " + this.debuggee);
+    console.log("WsPanel.onReady;");
 
     // Load content script and register message handler.
     let { messageManager } = this.panelFrame.frameLoader;
@@ -154,6 +154,8 @@ const WsPanel = Class(
       // xxxHonza: unregister actor on shutdown/disable/uninstall
       // but not on toolbox close.
       this.registrar = registrar;
+    }, response => {
+      console.log("WsToolboxPanel.attach; ERROR " + response, response);
     });
 
     return deferred.promise;

@@ -14,12 +14,22 @@ const { expectState } = devtools["require"]("devtools/server/actors/common");
 const protocol = devtools["require"]("devtools/server/protocol");
 const { method, RetVal, ActorClass, FrontClass, Front, Actor, Arg } = protocol;
 
-// Bug 1203802 - Websocket Frame Listener API for devtool Network Inspector
-try {
-  const webSocketService = Cc["@mozilla.org/websocketframe/service;1"].
-    getService(Ci.nsIWebSocketFrameService);
-} catch (err) {
+/**
+ * Bug 1203802 - Websocket Frame Listener API for devtool Network Inspector
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1203802
+ */
+function safeRequireWebSocketService() {
+  try {
+    return Cc["@mozilla.org/websocketframe/service;1"].
+      getService(Ci.nsIWebSocketFrameService);
+  } catch (err) {
+    Cu.reportError("WebSocket extension: nsIWebSocketFrameService " +
+      "not available! See bug: " +
+      "https://bugzilla.mozilla.org/show_bug.cgi?id=1203802");
+  }
 }
+
+const webSocketService = safeRequireWebSocketService();
 
 /**
  * Custom actor object
@@ -58,6 +68,12 @@ var WsActor = ActorClass({
    * Attach to this actor.
    */
   attach: method(expectState("detached", function() {
+    if (!webSocketService) {
+      return {
+        error: "Error: no WebSockets service!"
+      }
+    }
+
     this.state = "attached";
 
     var innerId = getInnerId(this.parent.window);
@@ -78,8 +94,16 @@ var WsActor = ActorClass({
   detach: method(expectState("attached", function() {
     this.state = "detached";
 
+    if (!webSocketService) {
+      return;
+    }
+
     var innerId = getInnerId(this.parent.window);
-    webSocketService.removeListener(innerId, this);
+    try {
+      webSocketService.removeListener(innerId, this);
+    } catch (err) {
+      Cu.reportError("WsActor.detach; ERROR " + err, err);
+    }
   }), {
     request: {},
     response: {
