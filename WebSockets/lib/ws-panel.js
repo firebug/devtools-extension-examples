@@ -2,22 +2,30 @@
 
 "use strict";
 
+// Add-on SDK
 const self = require("sdk/self");
 const options = require("@loader/options");
-
 const { Cu, Ci } = require("chrome");
 const { Panel } = require("dev/panel.js");
 const { Class } = require("sdk/core/heritage");
 const { Tool } = require("dev/toolbox");
 const { viewFor } = require("sdk/view/core");
-
 const { defer, resolve, all } = require("sdk/core/promise");
-const { WsActorFront } = require("./ws-actor.js");
-const { Rdp } = require("firebug.sdk/lib/core/rdp.js");
+const Events = require("sdk/dom/events");
 
+// Firebug.SDK
+const { Rdp } = require("firebug.sdk/lib/core/rdp.js");
+const { Locale } = require("firebug.sdk/lib/core/locale.js");
+const { Content } = require("firebug.sdk/lib/core/content.js");
+
+// WebSockets Monitor
+const { WsActorFront } = require("./ws-actor.js");
+
+// DevTools
 const { gDevTools } = Cu.import("resource:///modules/devtools/gDevTools.jsm", {});
 const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
 
+// Constants
 const actorModuleUrl = options.prefixURI + "lib/ws-actor.js";
 
 /**

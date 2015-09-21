@@ -2,16 +2,17 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <link href="ws-view.css" rel="stylesheet">
-  <script src="ws-view.js" type="application/javascript"></script>
+  <link href="chrome://websocketmonitor-firebug.sdk/skin/splitter.css" rel="stylesheet">
+  <link href="chrome://websocketmonitor-firebug.sdk/skin/domTree.css" rel="stylesheet">
+  <link href="chrome://websocketmonitor-firebug.sdk/skin/toolbar.css" rel="stylesheet">
+  <link href="chrome://websocketmonitor-firebug.sdk/skin/tabs.css" rel="stylesheet">
+  <link href="./ws-view.css" rel="stylesheet">
+
+  <script data-main="config.js" src="./lib/requirejs/require.js"></script>
 </head>
 <body>
-<!--
-<p1>Get list of WebSockets connections on this page</p>
-
-<button onClick="onGetConnections()">Get Connections</button>
-</p>
--->
-<div id="content"></div>
+  <body class="theme-firebug">
+    <div id="content"></div>
+  </body>
 </body>
 </html>

@@ -2,12 +2,32 @@
 
 /* The following implementation serves as a View (the V in MVC pattern) */
 
+define(function(require/*, exports, module*/) {
+
+"use strict";
+
+// Firebug.SDK
+const { createFactories } = require("reps/rep-utils");
+
+// ReactJS & Redux
+const React = require("react");
+const { Provider } = createFactories(require("react-redux"));
+
+// WebSockets Monitor
+const { App } = createFactories(require("./containers/app"));
+const { Resizer } = require("./resizer");
+const { configureStore } = require("./store/configure-store");
+
 /**
- * Button click handler
+ * Render the content.
  */
-function onGetConnections() {
-  postChromeMessage("get-connections", {})
-}
+var content = document.getElementById("content");
+var store = configureStore();
+var theApp = React.render(Provider({store: store},
+  () => App({})
+), content);
+
+// Events from Chrome
 
 /**
  * Listen for 'update-view' event that is sent as a response
@@ -15,12 +35,14 @@ function onGetConnections() {
  */
 addEventListener("update-view", function(event) {
   console.log("ws-view.js: update-view", event);
+});
 
-  var content = document.getElementById("content");
-  var node = document.createElement("div");
-  node.textContent = event.data;
-  node.className = "connections";
-  content.appendChild(node);
+addEventListener("frameReceived", function(event) {
+  console.log("ws-view.js: frameReceived", event);
+});
+
+addEventListener("frameSent", function(event) {
+  console.log("ws-view.js: frameSent", event);
 });
 
 /**
@@ -45,25 +67,9 @@ function postChromeMessage(id, data) {
   dispatchEvent(event);
 }
 
-// nsIWebSocketFrameService events
+// Make sure the document takes the entire available space
+// (vertically and horizontally).
+new Resizer(window, theApp);
 
-addEventListener("frameReceived", function(event) {
-  console.log("ws-view.js: frameReceived", event);
-
-  var content = document.getElementById("content");
-  var node = document.createElement("div");
-  node.textContent = "Received: " + event.data;
-  node.className = "frameReceived";
-  content.appendChild(node);
+// End of ws-view.js
 });
-
-addEventListener("frameSent", function(event) {
-  console.log("ws-view.js: frameSent", event);
-
-  var content = document.getElementById("content");
-  var node = document.createElement("div");
-  node.textContent = "Sent: " + event.data;
-  node.className = "frameSent";
-  content.appendChild(node);
-});
-
