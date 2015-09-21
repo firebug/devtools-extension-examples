@@ -16,4 +16,4 @@ require.config({
 });
 
 // Load the main panel module
-requirejs(["ws-view"]);
+requirejs(["main"]);

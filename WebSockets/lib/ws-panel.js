@@ -39,7 +39,7 @@ const WsPanel = Class(
   label: "Web Sockets",
   tooltip: "My panel tooltip",
   icon: "./icon-16.png",
-  url: "./ws-view.html",
+  url: "./view.html",
 
   /**
    * Executed by the framework when an instance of this panel is created.

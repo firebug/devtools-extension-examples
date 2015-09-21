@@ -71,5 +71,5 @@ function postChromeMessage(id, data) {
 // (vertically and horizontally).
 new Resizer(window, theApp);
 
-// End of ws-view.js
+// End of main.js
 });
