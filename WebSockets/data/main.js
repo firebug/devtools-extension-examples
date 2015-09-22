@@ -17,7 +17,7 @@ const { Provider } = createFactories(require("react-redux"));
 const { App } = createFactories(require("./containers/app"));
 const { Resizer } = require("./resizer");
 const { configureStore } = require("./store/configure-store");
-const { addFrame } = require("./actions/frames");
+const { addFrames } = require("./actions/frames");
 
 /**
  * Render the content.
@@ -38,14 +38,29 @@ addEventListener("update-view", function(event) {
 });
 
 addEventListener("frameReceived", function(event) {
-  var frame = JSON.parse(event.data);
-  store.dispatch(addFrame(frame));
+  lazyAdd(JSON.parse(event.data));
 });
 
 addEventListener("frameSent", function(event) {
-  var frame = JSON.parse(event.data);
-  store.dispatch(addFrame(frame));
+  lazyAdd(JSON.parse(event.data));
 });
+
+// Add new frames in batches
+var timeout;
+var newFrames = [];
+function lazyAdd(frame) {
+  newFrames.push(frame);
+
+  if (timeout) {
+    return;
+  }
+
+  timeout = setTimeout(() => {
+    store.dispatch(addFrames(newFrames));
+    newFrames = [];
+    timeout = null;
+  }, 300);
+}
 
 // Connection to Chrome
 

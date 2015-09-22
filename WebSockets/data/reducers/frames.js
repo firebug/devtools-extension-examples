@@ -4,7 +4,11 @@ define(function(require, exports/*, module*/) {
 
 "use strict";
 
+// WebSockets Monitor
 const { types } = require("../actions/frames");
+
+// Constants
+const FRAME_LIMIT = 500;
 
 const initialState = {
   frames: [],
@@ -14,10 +18,10 @@ const initialState = {
 function frames(state = initialState, action) {
   switch (action.type) {
   case types.ADD_FRAME:
-    return {
-      frames: [...state.frames, action.frame],
-      selection: state.selection
-    }
+    return addFrames(state, [action.frame]);
+
+  case types.ADD_FRAMES:
+    return addFrames(state, action.frames);
 
   case types.CLEAR:
     return {
@@ -27,6 +31,21 @@ function frames(state = initialState, action) {
 
   default:
     return state;
+  }
+}
+
+// Helpers
+
+function addFrames(state, newFrames) {
+  var frames = [...state.frames, ...newFrames];
+  if (frames.length > FRAME_LIMIT) {
+    frames.splice(0, frames.length - FRAME_LIMIT);
+  }
+
+  // Return new state
+  return {
+    frames: frames,
+    selection: state.selection
   }
 }
 
