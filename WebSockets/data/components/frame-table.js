@@ -7,6 +7,9 @@ define(function(require, exports/*, module*/) {
 // ReactJS
 const React = require("react");
 
+// Firebug SDK
+const { Str } = require("reps/core/string");
+
 // WebSockets Monitor
 const { selectFrame } = require("../actions/selection");
 
@@ -31,13 +34,16 @@ var FrameTable = React.createClass({
       dispatch: this.props.dispatch
     }));
 
+    // xxxHonza: localization
     return (
       table({className: "frameTable"},
         thead({className: "frameTHead"},
           tr({},
             th({className: "direction"}),
             th({className: "socketId"}, "Socket ID"),
+            th({className: "payloadSize"}, "Size"),
             th({className: "payload"}, "Payload"),
+            th({className: "opcode"}, "OpCode"),
             th({className: "bit"}, "MaskBit"),
             th({className: "bit"}, "FinBit")
           )
@@ -69,6 +75,29 @@ var FrameRow = React.createFactory(React.createClass({
     }
   },
 
+  getOpCode: function() {
+    var frame = this.props.frame;
+    var data = frame.header ? frame.header : frame.maskBit;
+    var opCode = parseInt(data.opCode, 10);
+
+    switch (opCode) {
+      case data.OPCODE_CONTINUATION:
+        return "CONTINUATION";
+      case data.OPCODE_TEXT:
+        return "TEXT";
+      case data.OPCODE_BINARY:
+        return "BINARY";
+      case data.OPCODE_CLOSE:
+        return "CLOSE";
+      case data.OPCODE_PING:
+        return "PING";
+      case data.OPCODE_PONG:
+        return "PONG";
+    }
+
+    return "(unknown)";
+  },
+
   render: function() {
     var frame = this.props.frame;
     var data = frame.header ? frame.header : frame.maskBit;
@@ -79,14 +108,19 @@ var FrameRow = React.createFactory(React.createClass({
       className += " selected";
     }
 
+    var payload = Str.cropString(data.payload, 50);
+    var size = Str.formatSize(data.payload.length);
     var onClick = this.onClick.bind(this);
+
     return (
       tr({className: className, onClick: onClick},
         td({className: "direction"},
           div({title: tooltipText})
         ),
         td({className: "socketId"}, frame.webSocketSerialID),
-        td({className: "payload"}, data.payload),
+        td({className: "payloadSize"}, size),
+        td({className: "payload"}, payload),
+        td({className: "opcode"}, this.getOpCode()),
         td({className: "bit"}, data.maskBit ? "true" : "false"),
         td({className: "bit"}, data.finBit ? "true" : "false")
       )

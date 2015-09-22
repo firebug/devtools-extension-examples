@@ -22,15 +22,8 @@ var DetailsTab = React.createClass({
 
   displayName: "DetailsTab",
 
-  getInitialState: function() {
-    return {
-      selectedFrame: null
-    };
-  },
-
   render: function() {
     var selectedFrame = this.props.selection || {};
-    console.log("details", this.props)
 
     return (
       DIV({className: "details"},

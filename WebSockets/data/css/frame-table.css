@@ -78,6 +78,11 @@
 /******************************************************************************/
 /* Frame Columns */
 
+.theme-firebug .frameTHead th {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 .theme-firebug .frameRow .direction {
   width: 20px;
 }
@@ -101,7 +106,7 @@
 .theme-firebug .frameTHead th.socketId,
 .theme-firebug .frameRow td.socketId {
   text-align: center;
-  width: 50px;
+  width: 20px;
 }
 
 .theme-firebug .frameTHead th.payload,
@@ -114,5 +119,21 @@
 .theme-firebug .frameTHead th.bit,
 .theme-firebug .frameRow td.bit {
   text-align: center;
-  width: 40px;
+  width: 20px;
+}
+
+.theme-firebug .frameTHead th.opcode,
+.theme-firebug .frameRow td.opcode {
+  text-align: center;
+  width: 100px;
+}
+
+.theme-firebug .frameRow td.opcode {
+  color: gray;
+}
+
+.theme-firebug .frameTHead th.payloadSize,
+.theme-firebug .frameRow td.payloadSize {
+  text-align: center;
+  width: 55px;
 }
