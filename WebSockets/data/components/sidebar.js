@@ -41,11 +41,11 @@ var Sidebar = React.createClass({
     // xxxHonza: localization
     return (
       Tabs({tabActive: tabActive, onAfterChange: this.onTabChanged},
-        TabPanel({className: "payload", title: "Payload"},
-          PayloadTab(this.props)
-        ),
         TabPanel({className: "details", title: "Details"},
           DetailsTab(this.props)
+        ),
+        TabPanel({className: "payload", title: "Payload"},
+          PayloadTab(this.props)
         )/*,
         TabPanel({className: "stack", title: "Stack"},
           StackTab(this.props)

@@ -9,6 +9,7 @@
   width: 100%;
   border-spacing: 0;
   border: none;
+  cursor: pointer;
 }
 
 .theme-firebug .frameTHead th {
@@ -72,4 +73,46 @@
 .theme-firebug .frameRow.selected td {
   background: #EFEFEF;
   color: black;
+}
+
+/******************************************************************************/
+/* Frame Columns */
+
+.theme-firebug .frameRow .direction {
+  width: 20px;
+}
+
+.theme-firebug .frameRow .direction div {
+  background-image: url('./send.png');
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
+.theme-firebug .frameRow.send td.direction div {
+  background-position: -12px 2px;
+}
+
+.theme-firebug .frameRow.receive td.direction div {
+  transform: scaleX(-1);
+  background-position: -14px 2px;
+}
+
+.theme-firebug .frameTHead th.socketId,
+.theme-firebug .frameRow td.socketId {
+  text-align: center;
+  width: 50px;
+}
+
+.theme-firebug .frameTHead th.payload,
+.theme-firebug .frameRow td.payload {
+  text-align: left;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.theme-firebug .frameTHead th.bit,
+.theme-firebug .frameRow td.bit {
+  text-align: center;
+  width: 40px;
 }
