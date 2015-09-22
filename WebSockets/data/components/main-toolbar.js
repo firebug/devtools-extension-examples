@@ -38,9 +38,9 @@ var MainToolbar = React.createClass({
     // xxxHonza: localization
     return (
       Toolbar({className: "toolbar"},
-        ToolbarButton({bsSize: "xsmall", onClick: this.onPause},
+        /*ToolbarButton({bsSize: "xsmall", onClick: this.onPause},
           "Pause"
-        ),
+        ),*/
         ToolbarButton({bsSize: "xsmall", onClick: this.onClear},
           "Clear"
         )
