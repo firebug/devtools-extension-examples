@@ -34,6 +34,10 @@ var App = React.createClass({
     return { data: [] };
   },
 
+  onClickRow: function(frame) {
+    this.store.dispatch(selectFrame(frame));
+  },
+
   render: function() {
     const { dispatch, frames, selection } = this.props;
 

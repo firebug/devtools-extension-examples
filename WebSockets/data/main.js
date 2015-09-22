@@ -35,18 +35,15 @@ var theApp = React.render(Provider({store: store},
  * to 'format-time'.
  */
 addEventListener("update-view", function(event) {
-  console.log("ws-view.js: update-view", event);
 });
 
 addEventListener("frameReceived", function(event) {
   var frame = JSON.parse(event.data);
-  console.log("ws-view.js: frameReceived", frame);
   store.dispatch(addFrame(frame));
 });
 
 addEventListener("frameSent", function(event) {
   var frame = JSON.parse(event.data);
-  console.log("ws-view.js: frameSent", frame);
   store.dispatch(addFrame(frame));
 });
 
@@ -61,8 +58,6 @@ addEventListener("frameSent", function(event) {
  * @param data {Object} Message data, must be serializable to JSON.
  */
 function postChromeMessage(id, data) {
-  console.log("ws-view.js: postChromeMessage; " + id, data);
-
   // Generate custom DOM event.
   const event = new MessageEvent("ws-monitor/event", {
     data: {

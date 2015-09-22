@@ -7,8 +7,8 @@ define(function(require, exports/*, module*/) {
 // ReactJS
 const React = require("react");
 
-// Firebug.SDK
-const { createFactories } = require("reps/rep-utils");
+// WebSockets Monitor
+const { selectFrame } = require("../actions/selection");
 
 // Constants
 const { table, thead, th, tbody, tr, td } = React.DOM;
@@ -25,7 +25,11 @@ var FrameTable = React.createClass({
     var frames = this.props.frames.frames;
 
     // Render list frames.
-    var rows = frames.map(frame => FrameRow({frame: frame}));
+    var rows = frames.map(frame => FrameRow({
+      frame: frame,
+      dispatch: this.props.dispatch
+    }));
+
     return (
       table({className: "frameTable"},
         thead({className: "frameTHead"},
@@ -51,13 +55,19 @@ var FrameRow = React.createFactory(React.createClass({
 
   displayName: "FrameRow",
 
+  onClick: function(frame) {
+    this.props.dispatch(selectFrame(frame));
+  },
+
   render: function() {
     var frame = this.props.frame;
     var data = frame.header ? frame.header : frame.maskBit;
     var className = "frameRow " + (frame.header ? "sent" : "received")
 
+    var onClick = this.onClick.bind(this, frame);
+
     return (
-      tr({className: className},
+      tr({className: className, onClick: onClick},
         td({}, frame.webSocketSerialID),
         td({}, data.payload),
         td({}, data.maskBit ? "true" : "false")

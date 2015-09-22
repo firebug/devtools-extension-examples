@@ -15,8 +15,7 @@ const { TreeView } = require("reps/tree-view");
 const { DIV } = Reps.DOM;
 
 /**
- * @template This template represents a list of packets displayed
- * inside the panel content.
+ * TODO: docs
  */
 var DetailsTab = React.createClass({
 /** @lends DetailsTab */
@@ -30,11 +29,12 @@ var DetailsTab = React.createClass({
   },
 
   render: function() {
-    var selectedFrame = this.props.selectedFrame || {};
+    var selectedFrame = this.props.selection || {};
+    console.log("details", this.props)
 
     return (
       DIV({className: "details"},
-        TreeView({key: "detailsTab", data: selectedFrame})
+        TreeView({key: "detailsTabTree", data: selectedFrame})
       )
     );
   }

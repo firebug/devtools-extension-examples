@@ -14,6 +14,7 @@ const { Tabs, TabPanel } = createFactories(require("reps/tabs"));
 // WebSockets Monitor
 const { DetailsTab } = createFactories(require("./details-tab"));
 const { StackTab } = createFactories(require("./stack-tab"));
+const { PayloadTab } = createFactories(require("./payload-tab"));
 
 /**
  * @template This template represents a list of packets displayed
@@ -27,7 +28,6 @@ var Sidebar = React.createClass({
   getInitialState: function() {
     return {
       tabActive: 1,
-      data: null,
    };
   },
 
@@ -36,18 +36,20 @@ var Sidebar = React.createClass({
   },
 
   render: function() {
-    var actions = this.props.actions;
     var tabActive = this.state.tabActive;
-    var data = this.state.data || this.props.data;
 
+    // xxxHonza: localization
     return (
       Tabs({tabActive: tabActive, onAfterChange: this.onTabChanged},
-        TabPanel({className: "details", title: "Details"},
-          DetailsTab({data: data, actions: actions})
+        TabPanel({className: "payload", title: "Payload"},
+          PayloadTab(this.props)
         ),
+        TabPanel({className: "details", title: "Details"},
+          DetailsTab(this.props)
+        )/*,
         TabPanel({className: "stack", title: "Stack"},
-          StackTab({data: data, actions: actions})
-        )
+          StackTab(this.props)
+        )*/
       )
     );
   }
