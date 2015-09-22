@@ -41,7 +41,6 @@ var App = React.createClass({
   render: function() {
     const { dispatch, frames, selection } = this.props;
 
-    console.log("app props ", this.props)
     var leftPanel =
       div({className: "mainPanel"},
         MainToolbar(this.props),
