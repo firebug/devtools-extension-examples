@@ -14,10 +14,16 @@ const initialState = {
 function frames(state = initialState, action) {
   switch (action.type) {
   case types.ADD_FRAME:
-    return [...state.frames, action.frame];
+    return {
+      frames: [...state.frames, action.frame],
+      selection: state.selection
+    }
 
   case types.CLEAR:
-    return [];
+    return {
+      frames: [],
+      selection: null
+    }
 
   default:
     return state;

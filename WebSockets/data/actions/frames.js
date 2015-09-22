@@ -14,7 +14,7 @@ function clear() {
 }
 
 function addFrame(frame) {
-  return { type: types.ADD_FRAME, frame };
+  return { type: types.ADD_FRAME, frame: frame };
 }
 
 // Exports from this module

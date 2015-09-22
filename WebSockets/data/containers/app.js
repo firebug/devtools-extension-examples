@@ -16,6 +16,7 @@ const { Splitter } = createFactories(require("reps/splitter"));
 // WebSockets Monitor
 const { MainToolbar } = createFactories(require("../components/main-toolbar"));
 const { Sidebar } = createFactories(require("../components/sidebar"));
+const { FrameTable } = createFactories(require("../components/frame-table"));
 
 // Shortcuts
 const { div } = React.DOM;
@@ -36,17 +37,18 @@ var App = React.createClass({
   render: function() {
     const { dispatch, frames, selection } = this.props;
 
-    console.log("props ", this.props);
-
+    console.log("app props ", this.props)
     var leftPanel =
       div({className: "mainPanel"},
-        MainToolbar({}),
-        div({className: "mainPanelContent"})
+        MainToolbar(this.props),
+        div({className: "mainPanelContent"},
+          FrameTable(this.props)
+        )
       );
 
     var rightPanel =
       div({className: "sidePanel"},
-        Sidebar({})
+        Sidebar(this.props)
       );
 
     return (

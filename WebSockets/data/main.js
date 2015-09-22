@@ -17,6 +17,7 @@ const { Provider } = createFactories(require("react-redux"));
 const { App } = createFactories(require("./containers/app"));
 const { Resizer } = require("./resizer");
 const { configureStore } = require("./store/configure-store");
+const { addFrame } = require("./actions/frames");
 
 /**
  * Render the content.
@@ -38,12 +39,18 @@ addEventListener("update-view", function(event) {
 });
 
 addEventListener("frameReceived", function(event) {
-  console.log("ws-view.js: frameReceived", event);
+  var frame = JSON.parse(event.data);
+  console.log("ws-view.js: frameReceived", frame);
+  store.dispatch(addFrame(frame));
 });
 
 addEventListener("frameSent", function(event) {
-  console.log("ws-view.js: frameSent", event);
+  var frame = JSON.parse(event.data);
+  console.log("ws-view.js: frameSent", frame);
+  store.dispatch(addFrame(frame));
 });
+
+// Connection to Chrome
 
 /**
  * Post events to the frameScript.js scope, it's consequently

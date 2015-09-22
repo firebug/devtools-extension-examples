@@ -1,0 +1,75 @@
+/* See license.txt for terms of usage */
+
+/******************************************************************************/
+/* Frame Table */
+
+.theme-firebug .frameTable {
+  font-family: Lucida Grande, Tahoma, sans-serif;
+  font-size: 11px;
+  width: 100%;
+  border-spacing: 0;
+  border: none;
+}
+
+.theme-firebug .frameTHead th {
+  min-height: 17px;
+  cursor: pointer;
+  -moz-user-select: none;
+  /*border-bottom: 1px solid rgba(0, 0, 0, 0.2);*/
+  padding: 2px;
+  font-weight: bold;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.05),
+    rgba(0, 0, 0, 0.05)),
+    radial-gradient(1px 60% at right,
+    rgba(0, 0, 0, 0.8) 0%,
+    transparent 80%) repeat-x #C8D2DC;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.theme-firebug .frameTHead th[sorted] {
+  background-color: #AAC3DC;
+}
+
+.theme-firebug .frameTHead th:not(:active)[sorted=descending] {
+  background: url(chrome://firebug/skin/arrowDown.svg) no-repeat calc(100% - 4px);
+}
+
+.theme-firebug .frameTHead th:not(:active)[sorted=ascending] {
+  background: url(chrome://firebug/skin/arrowUp.svg) no-repeat calc(100% - 4px);
+}
+
+.theme-firebug .frameTHead th:hover:active {
+  background-image: linear-gradient(
+          rgba(0, 0, 0, 0.1),
+          transparent),
+      radial-gradient(1px 60% at right,
+          rgba(0, 0, 0, 0.8) 0%,
+          transparent 80%);
+}
+
+/******************************************************************************/
+/* Frame Rows */
+
+.theme-firebug .frameRow td {
+  background: white;
+  height: 17px;
+  line-height: 15px;
+  border-bottom: 1px solid #EFEFEF;
+  margin: 0;
+  padding: 1px;
+}
+
+.theme-firebug .frameRow:hover td {
+  background: #EFEFEF;
+}
+
+.theme-firebug .frameRow {
+  padding: 1px;
+}
+
+.theme-firebug .frameRow.selected td {
+  background: #EFEFEF;
+  color: black;
+}
