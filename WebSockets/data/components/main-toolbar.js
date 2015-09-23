@@ -35,14 +35,13 @@ var MainToolbar = React.createClass({
   // Render
 
   render: function() {
-    // xxxHonza: localization
     return (
       Toolbar({className: "toolbar"},
         /*ToolbarButton({bsSize: "xsmall", onClick: this.onPause},
-          "Pause"
+          Locale.$STR("websocketmonitor.Pause")
         ),*/
         ToolbarButton({bsSize: "xsmall", onClick: this.onClear},
-          "Clear"
+          Locale.$STR("websocketmonitor.Clear")
         )
       )
     );

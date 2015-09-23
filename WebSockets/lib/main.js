@@ -2,18 +2,22 @@
 
 "use strict";
 
-const { Trace/*, TraceError*/ } = require("firebug.sdk/lib/core/trace.js").get(module.id);
+// Firebug SDK
 const { ToolboxChrome } = require("firebug.sdk/lib/toolbox-chrome.js");
+const { Locale } = require("firebug.sdk/lib/core/locale.js");
 
 const { WsPanel } = require("./ws-panel.js");
 const { WsToolboxOverlay } = require("./ws-toolbox-overlay.js");
+
+// Localization files. All strings in the UI should be loaded from these
+// files, so the entire extension can be localized into other languages.
+Locale.registerStringBundle("chrome://websocketmonitor/locale/websocket-monitor.properties");
+Locale.registerStringBundle("chrome://websocketmonitor-firebug.sdk/locale/reps.properties");
 
 /**
  * Application entry point
  */
 function main(options, callbacks) {
-  Trace.sysout("main;", options);
-
   ToolboxChrome.initialize(options);
   ToolboxChrome.registerToolboxOverlay(WsToolboxOverlay);
 }
@@ -22,8 +26,6 @@ function main(options, callbacks) {
  * Called at shutdown (uninstall, disable, Firefox shutdown)
  */
 function onUnload(reason) {
-  Trace.sysout("onUnload; " + reason);
-
   ToolboxChrome.unregisterToolboxOverlay(WsToolboxOverlay);
   ToolboxChrome.shutdown(reason);
 }

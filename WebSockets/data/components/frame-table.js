@@ -34,18 +34,17 @@ var FrameTable = React.createClass({
       dispatch: this.props.dispatch
     }));
 
-    // xxxHonza: localization
     return (
       table({className: "frameTable"},
         thead({className: "frameTHead"},
           tr({},
             th({className: "direction"}),
-            th({className: "socketId"}, "Socket ID"),
-            th({className: "payloadSize"}, "Size"),
-            th({className: "payload"}, "Payload"),
-            th({className: "opcode"}, "OpCode"),
-            th({className: "bit"}, "MaskBit"),
-            th({className: "bit"}, "FinBit")
+            th({className: "socketId"}, Locale.$STR("websocketmonitor.SocketID")),
+            th({className: "payloadSize"}, Locale.$STR("websocketmonitor.Size")),
+            th({className: "payload"}, Locale.$STR("websocketmonitor.Payload")),
+            th({className: "opcode"}, Locale.$STR("websocketmonitor.OpCode")),
+            th({className: "bit"}, Locale.$STR("websocketmonitor.MaskBit")),
+            th({className: "bit"}, Locale.$STR("websocketmonitor.FinBit"))
           )
         ),
         tbody({className: "frameTBody"},

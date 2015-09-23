@@ -3,7 +3,7 @@
 /******************************************************************************/
 /* Frame Table */
 
-.theme-firebug .frameTable {
+.frameTable {
   font-family: Lucida Grande, Tahoma, sans-serif;
   font-size: 11px;
   width: 100%;
@@ -12,7 +12,7 @@
   cursor: pointer;
 }
 
-.theme-firebug .frameTHead th {
+.frameTHead th {
   min-height: 17px;
   cursor: pointer;
   -moz-user-select: none;
@@ -29,19 +29,19 @@
   white-space: nowrap;
 }
 
-.theme-firebug .frameTHead th[sorted] {
+.frameTHead th[sorted] {
   background-color: #AAC3DC;
 }
 
-.theme-firebug .frameTHead th:not(:active)[sorted=descending] {
+.frameTHead th:not(:active)[sorted=descending] {
   background: url(chrome://firebug/skin/arrowDown.svg) no-repeat calc(100% - 4px);
 }
 
-.theme-firebug .frameTHead th:not(:active)[sorted=ascending] {
+.frameTHead th:not(:active)[sorted=ascending] {
   background: url(chrome://firebug/skin/arrowUp.svg) no-repeat calc(100% - 4px);
 }
 
-.theme-firebug .frameTHead th:hover:active {
+.frameTHead th:hover:active {
   background-image: linear-gradient(
           rgba(0, 0, 0, 0.1),
           transparent),
@@ -53,7 +53,7 @@
 /******************************************************************************/
 /* Frame Rows */
 
-.theme-firebug .frameRow td {
+.frameRow td {
   background: white;
   height: 17px;
   line-height: 15px;
@@ -62,15 +62,15 @@
   padding: 1px;
 }
 
-.theme-firebug .frameRow:hover td {
+.frameRow:hover td {
   background: #EFEFEF;
 }
 
-.theme-firebug .frameRow {
+
   padding: 1px;
 }
 
-.theme-firebug .frameRow.selected td {
+.frameRow.selected td {
   background: #EFEFEF;
   color: black;
 }
@@ -78,62 +78,66 @@
 /******************************************************************************/
 /* Frame Columns */
 
-.theme-firebug .frameTHead th {
+.frameTHead th {
   padding-left: 5px;
   padding-right: 5px;
 }
 
-.theme-firebug .frameRow .direction {
+.frameRow .direction {
   width: 20px;
 }
 
-.theme-firebug .frameRow .direction div {
+.frameRow .direction div {
   background-image: url('./send.png');
   background-repeat: no-repeat;
   width: 100%;
   height: 100%;
 }
 
-.theme-firebug .frameRow.send td.direction div {
+.frameRow.send td.direction div {
   background-position: -12px 2px;
 }
 
-.theme-firebug .frameRow.receive td.direction div {
+.frameRow.receive td.direction div {
   transform: scaleX(-1);
   background-position: -14px 2px;
 }
 
-.theme-firebug .frameTHead th.socketId,
-.theme-firebug .frameRow td.socketId {
+.frameTHead th.socketId,
+.frameRow td.socketId {
   text-align: center;
   width: 20px;
 }
 
-.theme-firebug .frameTHead th.payload,
-.theme-firebug .frameRow td.payload {
+.frameTHead th.payload,
+.frameRow td.payload {
   text-align: left;
   padding-left: 3px;
   padding-right: 3px;
 }
 
-.theme-firebug .frameTHead th.bit,
-.theme-firebug .frameRow td.bit {
+.frameTHead th.bit,
+.frameRow td.bit {
   text-align: center;
   width: 20px;
 }
 
-.theme-firebug .frameTHead th.opcode,
-.theme-firebug .frameRow td.opcode {
+.frameTHead th.opcode,
+.frameRow td.opcode {
   text-align: center;
   width: 55px;
 }
 
-.theme-firebug .frameRow td.opcode {
+.frameRow td.opcode {
   color: gray;
 }
 
-.theme-firebug .frameTHead th.payloadSize,
-.theme-firebug .frameRow td.payloadSize {
+.frameTHead th.payloadSize,
+.frameRow td.payloadSize {
   text-align: center;
   width: 55px;
 }
+
+/******************************************************************************/
+/* Theme Light */
+
