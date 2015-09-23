@@ -12,11 +12,13 @@ const { Tool } = require("dev/toolbox");
 const { viewFor } = require("sdk/view/core");
 const { defer, resolve, all } = require("sdk/core/promise");
 const Events = require("sdk/dom/events");
+const { loadSheet, removeSheet } = require("sdk/stylesheet/utils");
 
 // Firebug.SDK
 const { Rdp } = require("firebug.sdk/lib/core/rdp.js");
 const { Locale } = require("firebug.sdk/lib/core/locale.js");
 const { Content } = require("firebug.sdk/lib/core/content.js");
+const { ToolboxChrome } = require("firebug.sdk/lib/toolbox-chrome.js");
 
 // WebSockets Monitor
 const { WsActorFront } = require("./ws-actor.js");
@@ -24,6 +26,7 @@ const { WsActorFront } = require("./ws-actor.js");
 // DevTools
 const { gDevTools } = Cu.import("resource:///modules/devtools/gDevTools.jsm", {});
 const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
+const { Services } = Cu.import("resource://gre/modules/Services.jsm", {});
 
 // Constants
 const actorModuleUrl = options.prefixURI + "lib/ws-actor.js";
@@ -52,6 +55,7 @@ const WsPanel = Class(
     // nsIWebSocketFrameService events
     this.onFrameReceived = this.onFrameReceived.bind(this);
     this.onFrameSent = this.onFrameSent.bind(this);
+    this.onThemeChanged = this.onThemeChanged.bind(this);
   },
 
   /**
@@ -71,7 +75,9 @@ const WsPanel = Class(
 
     this.debuggee = options.debuggee;
     this.panelFrame = viewFor(this);
-    this.toolbox = getToolbox(this.panelFrame.ownerDocument.defaultView);
+    this.toolbox = getToolbox(this.panelFrame.contentWindow);
+
+    ToolboxChrome.on("theme-changed", this.onThemeChanged);
 
     this.attach();
   },
@@ -88,6 +94,44 @@ const WsPanel = Class(
     }
   },
 
+  onThemeChanged: function(newTheme, oldTheme) {
+    this.postContentMessage("theme-changed", {
+      newTheme: newTheme,
+      oldTheme: oldTheme,
+    });
+  },
+
+  // Events from the View (myView.html)
+
+  onContentReady: function(args) {
+    console.log("WsPanel.onContentReady()", args);
+
+    let win = this.panelFrame.contentWindow;
+    let theme = {
+      getDefinition: function(themeId) {
+        let view = Content.getContentView(win);
+        let def = gDevTools.getThemeDefinition(themeId);
+        return view.JSON.parse(JSON.stringify(def));
+      },
+      loadSheet: function(url) {
+        loadSheet(win, url, "author");
+      },
+      removeSheet: function(win, url) {
+        removeSheet(win, url, "author");
+      },
+      getCurrentTheme: function() {
+        return Services.prefs.getCharPref("devtools.theme");
+      }
+    }
+
+    Content.exportIntoContentScope(win, Locale, "Locale");
+    Content.exportIntoContentScope(win, theme, "Theme");
+
+    this.postContentMessage("initialize", {
+      currentTheme: Services.prefs.getCharPref("devtools.theme")
+    });
+  },
+
   /**
    * Handle messages coming from the view (WsPanel.html)
    */
@@ -96,8 +140,8 @@ const WsPanel = Class(
 
     let event = msg.data;
     switch (event.type) {
-      case "get-connections":
-      this.onGetConnections(event.args);
+      case "ready":
+      this.onContentReady(event.args);
       break
     }
   },
@@ -112,22 +156,6 @@ const WsPanel = Class(
       bubbles: false,
       cancelable: false,
       data: data,
-      origin: this.url,
-    });
-  },
-
-  // Events from the View (myView.html)
-
-  onGetConnections: function(args) {
-    console.log("WsPanel.onGetConnections()", args);
-
-    // Use model API to nicely format the time and return
-    // the result back the view to update the UI.
-    let connections = args;
-
-    this.front.getConnections().then(response => {
-      console.log("get connections response", response);
-      this.postContentMessage("update-view", JSON.stringify(response));
     });
   },
 

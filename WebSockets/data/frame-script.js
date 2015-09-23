@@ -24,10 +24,9 @@ const window = content;
  */
 addMessageListener("ws-monitor/message", message => {
   const { type, data } = message.data;
-  const event = new window.MessageEvent(type, {
-    data: data,
-  });
-
+  var contentData = new window.Object();
+  contentData.data = window.wrappedJSObject.JSON.parse(JSON.stringify(data));
+  const event = new window.MessageEvent(type, contentData);
   window.dispatchEvent(event);
 });
 

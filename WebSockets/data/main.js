@@ -19,22 +19,12 @@ const { Resizer } = require("./resizer");
 const { configureStore } = require("./store/configure-store");
 const { addFrames } = require("./actions/frames");
 
-/**
- * Render the content.
- */
-var content = document.getElementById("content");
 var store = configureStore();
-var theApp = React.render(Provider({store: store},
-  () => App({})
-), content);
 
 // Events from Chrome
 
-/**
- * Listen for 'update-view' event that is sent as a response
- * to 'format-time'.
- */
-addEventListener("update-view", function(event) {
+addEventListener("initialize", function(event) {
+  initialize(event.data);
 });
 
 addEventListener("frameReceived", function(event) {
@@ -44,6 +34,24 @@ addEventListener("frameReceived", function(event) {
 addEventListener("frameSent", function(event) {
   lazyAdd(JSON.parse(event.data));
 });
+
+// Implementation
+
+/**
+ * Render the content.
+ */
+function initialize(data) {
+  var content = document.getElementById("content");
+
+  // Render the top level component
+  var theApp = React.render(Provider({store: store},
+    () => App({})
+  ), content);
+
+  // Make sure the document takes the entire available space
+  // (vertically and horizontally).
+  new Resizer(window, theApp);
+}
 
 // Add new frames in batches
 var timeout;
@@ -84,9 +92,7 @@ function postChromeMessage(id, data) {
   dispatchEvent(event);
 }
 
-// Make sure the document takes the entire available space
-// (vertically and horizontally).
-new Resizer(window, theApp);
+postChromeMessage("ready");
 
 // End of main.js
 });
