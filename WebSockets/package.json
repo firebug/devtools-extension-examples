@@ -1,13 +1,13 @@
 {
   "name": "websocketmonitor",
-  "title": "WebSocketMonitor",
+  "title": "WebSocket Monitor",
   "id": "websocketmonitor@getfirebug.com",
-  "description": "Monitor WebSocket communication",
+  "description": "Monitor WebSockets communication",
   "author": "Jan Odvarko",
   "license": "BSD",
   "version": "0.1.0",
   "main": "lib/main",
   "dependencies": {
-    "firebug.sdk": "~0.6.3"
+    "firebug.sdk": "0.x"
   }
 }
