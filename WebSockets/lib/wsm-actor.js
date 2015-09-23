@@ -12,6 +12,8 @@ const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {})
 const { console } = Cu.import("resource://gre/modules/devtools/Console.jsm", {});
 const { expectState } = devtools["require"]("devtools/server/actors/common");
 const protocol = devtools["require"]("devtools/server/protocol");
+
+// Constants
 const { method, RetVal, ActorClass, FrontClass, Front, Actor, Arg } = protocol;
 
 /**
@@ -34,8 +36,8 @@ const webSocketService = safeRequireWebSocketService();
 /**
  * Custom actor object
  */
-var WsActor = ActorClass({
-  typeName: "WsActor",
+var WsmActor = ActorClass({
+  typeName: "WsmActor",
 
   /**
    * Events emitted by this actor.
@@ -50,7 +52,7 @@ var WsActor = ActorClass({
   initialize: function(conn, parent) {
     Actor.prototype.initialize.call(this, conn);
 
-    console.log("WsActor.initialize");
+    console.log("WsmActor.initialize");
 
     this.parent = parent;
     this.state = "detached";
@@ -102,7 +104,7 @@ var WsActor = ActorClass({
     try {
       webSocketService.removeListener(innerId, this);
     } catch (err) {
-      Cu.reportError("WsActor.detach; ERROR " + err, err);
+      Cu.reportError("WsmActor.detach; ERROR " + err, err);
     }
   }), {
     request: {},
@@ -132,7 +134,6 @@ var WsActor = ActorClass({
 
   frameReceived: function(webSocketSerialID, maskBit, finBit,
     rsvBits, opCode, payload) {
-
     Events.emit(this, "frameReceived", {
       webSocketSerialID: webSocketSerialID,
       maskBit: maskBit,
@@ -144,7 +145,6 @@ var WsActor = ActorClass({
   },
 
   frameSent: function(webSocketSerialID, header, payload) {
-
     Events.emit(this, "frameSent", {
       webSocketSerialID: webSocketSerialID,
       header: header,
@@ -163,15 +163,15 @@ function getInnerId(win) {
 /**
  * TODO: docs
  */
-var WsActorFront = FrontClass(WsActor, {
+var WsmActorFront = FrontClass(WsmActor, {
   initialize: function(client, form) {
     Front.prototype.initialize.call(this, client, form);
 
-    this.actorID = form[WsActor.prototype.typeName];
+    this.actorID = form[WsmActor.prototype.typeName];
     this.manage(this);
   }
 });
 
 // Exports from this module
-exports.WsActor = WsActor;
-exports.WsActorFront = WsActorFront;
+exports.WsmActor = WsmActor;
+exports.WsmActorFront = WsmActorFront;

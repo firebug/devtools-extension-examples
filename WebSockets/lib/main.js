@@ -6,8 +6,9 @@
 const { ToolboxChrome } = require("firebug.sdk/lib/toolbox-chrome.js");
 const { Locale } = require("firebug.sdk/lib/core/locale.js");
 
-const { WsPanel } = require("./ws-panel.js");
-const { WsToolboxOverlay } = require("./ws-toolbox-overlay.js");
+// WebSocket Monitor
+const { WsmPanel } = require("./wsm-panel.js");
+const { WsmToolboxOverlay } = require("./wsm-toolbox-overlay.js");
 
 // Localization files. All strings in the UI should be loaded from these
 // files, so the entire extension can be localized into other languages.
@@ -19,14 +20,14 @@ Locale.registerStringBundle("chrome://websocketmonitor-firebug.sdk/locale/reps.p
  */
 function main(options, callbacks) {
   ToolboxChrome.initialize(options);
-  ToolboxChrome.registerToolboxOverlay(WsToolboxOverlay);
+  ToolboxChrome.registerToolboxOverlay(WsmToolboxOverlay);
 }
 
 /**
  * Called at shutdown (uninstall, disable, Firefox shutdown)
  */
 function onUnload(reason) {
-  ToolboxChrome.unregisterToolboxOverlay(WsToolboxOverlay);
+  ToolboxChrome.unregisterToolboxOverlay(WsmToolboxOverlay);
   ToolboxChrome.shutdown(reason);
 }
 

@@ -20,8 +20,8 @@ const { Locale } = require("firebug.sdk/lib/core/locale.js");
 const { Content } = require("firebug.sdk/lib/core/content.js");
 const { ToolboxChrome } = require("firebug.sdk/lib/toolbox-chrome.js");
 
-// WebSockets Monitor
-const { WsActorFront } = require("./ws-actor.js");
+// WebSocket Monitor
+const { WsmActorFront } = require("./wsm-actor.js");
 
 // DevTools
 const { gDevTools } = Cu.import("resource:///modules/devtools/gDevTools.jsm", {});
@@ -29,13 +29,13 @@ const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {})
 const { Services } = Cu.import("resource://gre/modules/Services.jsm", {});
 
 // Constants
-const actorModuleUrl = options.prefixURI + "lib/ws-actor.js";
+const actorModuleUrl = options.prefixURI + "lib/wsm-actor.js";
 
 /**
  * This object represents a new {@Toolbox} panel
  */
-const WsPanel = Class(
-/** @lends WsPanel */
+const WsmPanel = Class(
+/** @lends WsmPanel */
 {
   extends: Panel,
 
@@ -71,7 +71,7 @@ const WsPanel = Class(
   * `debuggee` object
   */
   setup: function(options) {
-    console.log("WsPanel.setup;", options);
+    console.log("WsmPanel.setup;", options);
 
     this.debuggee = options.debuggee;
     this.panelFrame = viewFor(this);
@@ -83,7 +83,7 @@ const WsPanel = Class(
   },
 
   onReady: function() {
-    console.log("WsPanel.onReady;");
+    console.log("WsmPanel.onReady;");
 
     // Load content script and register message handler.
     let { messageManager } = this.panelFrame.frameLoader;
@@ -104,7 +104,7 @@ const WsPanel = Class(
   // Events from the View (myView.html)
 
   onContentReady: function(args) {
-    console.log("WsPanel.onContentReady()", args);
+    console.log("WsmPanel.onContentReady()", args);
 
     let win = this.panelFrame.contentWindow;
     let theme = {
@@ -133,10 +133,10 @@ const WsPanel = Class(
   },
 
   /**
-   * Handle messages coming from the view (WsPanel.html)
+   * Handle messages coming from the view (WsmPanel.html)
    */
   onContentMessage: function(msg) {
-    console.log("WsPanel.onContentMessage;", msg);
+    console.log("WsmPanel.onContentMessage;", msg);
 
     let event = msg.data;
     switch (event.type) {
@@ -168,9 +168,9 @@ const WsPanel = Class(
 
     // Inspector actor registration options.
     let config = {
-      prefix: WsActorFront.prototype.typeName,
-      actorClass: "WsActor",
-      frontClass: WsActorFront,
+      prefix: WsmActorFront.prototype.typeName,
+      actorClass: "WsmActor",
+      frontClass: WsmActorFront,
       moduleUrl: actorModuleUrl
     };
 
@@ -179,7 +179,7 @@ const WsPanel = Class(
 
     // Register as tab actor.
     Rdp.registerTabActor(client, config).then(({registrar, front}) => {
-      console.log("WsToolboxPanel.attach; Done", front);
+      console.log("WsmPanel.attach; Done", front);
 
       this.front = front;
 
@@ -191,7 +191,7 @@ const WsPanel = Class(
       // but not on toolbox close.
       this.registrar = registrar;
     }, response => {
-      console.log("WsToolboxPanel.attach; ERROR " + response, response);
+      console.log("WsmPanel.attach; ERROR " + response, response);
     });
 
     return deferred.promise;
@@ -205,7 +205,7 @@ const WsPanel = Class(
     let front = this.front;
     let deferred = defer();
     front.detach().then(response => {
-      console.log("WsToolboxOverlay.detach; Done", response);
+      console.log("WsmPanel.detach; Done", response);
 
       front.off("frameReceived", this.onFrameReceived);
       front.off("frameSent", this.onFrameSent);
@@ -261,6 +261,6 @@ function getCurrentTab(win) {
 const myTool = new Tool({
   name: "MyTool",
   panels: {
-    WsPanel: WsPanel
+    WsmPanel: WsmPanel
   }
 });
