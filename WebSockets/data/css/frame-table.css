@@ -138,6 +138,12 @@
   width: 55px;
 }
 
+.frameTHead th.time,
+.frameRow td.time {
+  text-align: center;
+  width: 50px;
+}
+
 /******************************************************************************/
 /* Theme Light */
 

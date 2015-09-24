@@ -44,7 +44,8 @@ var FrameTable = React.createClass({
             th({className: "payload"}, Locale.$STR("websocketmonitor.Payload")),
             th({className: "opcode"}, Locale.$STR("websocketmonitor.OpCode")),
             th({className: "bit"}, Locale.$STR("websocketmonitor.MaskBit")),
-            th({className: "bit"}, Locale.$STR("websocketmonitor.FinBit"))
+            th({className: "bit"}, Locale.$STR("websocketmonitor.FinBit")),
+            th({className: "time"}, Locale.$STR("websocketmonitor.Time"))
           )
         ),
         tbody({className: "frameTBody"},
@@ -110,6 +111,7 @@ var FrameRow = React.createFactory(React.createClass({
     var payload = Str.cropString(data.payload, 50);
     var size = Str.formatSize(data.payload.length);
     var onClick = this.onClick.bind(this);
+    var time = new Date(data.timeStamp);
 
     return (
       tr({className: className, onClick: onClick},
@@ -121,7 +123,8 @@ var FrameRow = React.createFactory(React.createClass({
         td({className: "payload"}, payload),
         td({className: "opcode"}, this.getOpCode()),
         td({className: "bit"}, data.maskBit ? "true" : "false"),
-        td({className: "bit"}, data.finBit ? "true" : "false")
+        td({className: "bit"}, data.finBit ? "true" : "false"),
+        td({className: "time"}, time.toLocaleTimeString())
       )
     );
   }
