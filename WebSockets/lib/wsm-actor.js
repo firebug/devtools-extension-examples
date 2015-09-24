@@ -58,6 +58,10 @@ var WsmActor = ActorClass({
 
     this.parent = parent;
     this.state = "detached";
+
+    // Frame listener needs to be re-registered when page navigation happens.
+    this.onNavigate = this.onNavigate.bind(this);
+    this.onWillNavigate = this.onWillNavigate.bind(this);
   },
 
   destroy: function() {
@@ -80,12 +84,13 @@ var WsmActor = ActorClass({
 
     this.state = "attached";
 
-    var innerId = getInnerId(this.parent.window);
-    webSocketService.addListener(innerId, this);
+    Events.on(this.parent, "navigate", this.onNavigate);
+    Events.on(this.parent, "will-navigate", this.onWillNavigate);
+
+    this.addFrameListener();
 
     return {
-      type: "attached",
-      winInnerId: innerId
+      type: "attached"
     }
   }), {
     request: {},
@@ -102,12 +107,10 @@ var WsmActor = ActorClass({
       return;
     }
 
-    var innerId = getInnerId(this.parent.window);
-    try {
-      webSocketService.removeListener(innerId, this);
-    } catch (err) {
-      Cu.reportError("WsmActor.detach; ERROR " + err, err);
-    }
+    Events.off(this.parent, "navigate", this.onNavigate);
+    Events.off(this.parent, "will-navigate", this.onWillNavigate);
+
+    this.removeFrameListener();
   }), {
     request: {},
     response: {
@@ -152,7 +155,41 @@ var WsmActor = ActorClass({
       header: header,
       payload: payload
     });
-  }
+  },
+
+  // Events
+
+  onWillNavigate: function({isTopLevel}) {
+    console.log("WsmActor.onWillNavigate " + isTopLevel);
+
+    if (isTopLevel) {
+      this.removeFrameListener();
+    }
+  },
+
+  onNavigate: function({isTopLevel}) {
+    console.log("WsmActor.onNavigate " + isTopLevel);
+
+    if (isTopLevel) {
+      this.addFrameListener();
+    }
+  },
+
+  // Frame Listener
+
+  addFrameListener: function() {
+    var innerId = getInnerId(this.parent.window);
+    webSocketService.addListener(innerId, this);
+  },
+
+  removeFrameListener: function() {
+    var innerId = getInnerId(this.parent.window);
+    try {
+      webSocketService.removeListener(innerId, this);
+    } catch (err) {
+      Cu.reportError("WsmActor.removeFrameListener; ERROR " + err, err);
+    }
+  },
 });
 
 // Helpers
