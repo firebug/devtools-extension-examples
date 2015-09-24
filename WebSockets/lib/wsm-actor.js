@@ -3,15 +3,17 @@
 "use strict";
 
 // Add-on SDK
-const Events = require("sdk/event/core");
 const { Cc, Ci, Cu } = require("chrome");
+const Events = require("sdk/event/core");
 
 // DevTools
-const { XPCOMUtils } = Cu.import("resource://gre/modules/XPCOMUtils.jsm", {});
-const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
-const { console } = Cu.import("resource://gre/modules/devtools/Console.jsm", {});
+const { devtools } = Cu.import("resource://gre/modules/devtools/shared/Loader.jsm", {});
+const { console } = Cu.import("resource://gre/modules/devtools/shared/Console.jsm", {});
 const { expectState } = devtools["require"]("devtools/server/actors/common");
 const protocol = devtools["require"]("devtools/server/protocol");
+
+// Platform
+const { XPCOMUtils } = Cu.import("resource://gre/modules/XPCOMUtils.jsm", {});
 
 // Constants
 const { method, RetVal, ActorClass, FrontClass, Front, Actor, Arg } = protocol;

@@ -19,13 +19,12 @@ const { Rdp } = require("firebug.sdk/lib/core/rdp.js");
 const { Locale } = require("firebug.sdk/lib/core/locale.js");
 const { Content } = require("firebug.sdk/lib/core/content.js");
 const { ToolboxChrome } = require("firebug.sdk/lib/toolbox-chrome.js");
+const { devtools, gDevTools } = require("firebug.sdk/lib/core/devtools.js");
 
 // WebSocket Monitor
 const { WsmActorFront } = require("./wsm-actor.js");
 
-// DevTools
-const { gDevTools } = Cu.import("resource:///modules/devtools/gDevTools.jsm", {});
-const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
+// Platform
 const { Services } = Cu.import("resource://gre/modules/Services.jsm", {});
 
 // Constants
