@@ -5,8 +5,15 @@
 const { Cu, Ci } = require("chrome");
 const { gDevTools } = Cu.import("resource:///modules/devtools/gDevTools.jsm", {});
 const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {});
-const { HarExporter } = devtools["require"]("devtools/netmonitor/har/har-exporter.js");
 const { console } = Cu.import("resource://gre/modules/devtools/Console.jsm", {});
+
+// https://bugzilla.mozilla.org/show_bug.cgi?id=912121 
+const HarExporter;
+try {
+  HarExporter = devtools["require"]("devtools/client/netmonitor/har/har-exporter");
+} catch (err) {
+  HarExporter = devtools["require"]("devtools/netmonitor/har/har-exporter.js");
+}
 
 /**
  * This object represents an overlay for the DevTools Toolbox.
