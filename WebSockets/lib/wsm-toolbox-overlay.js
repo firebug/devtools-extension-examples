@@ -15,7 +15,11 @@ const { Class } = require("sdk/core/heritage");
 const { ToolboxOverlay } = require("firebug.sdk/lib/toolbox-overlay.js");
 
 /**
- * @overlay
+ * This object represents a toolbox overlay. The life cycle of this
+ * object follows life cycle of the toolbox, which allows to execute
+ * any initialization and clean up logic related to our extension.
+ *
+ * There is one instance of this object created per developer Toolbox.
  */
 const WsmToolboxOverlay = Class(
 /** @lends WsmToolboxOverlay */

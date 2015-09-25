@@ -31,7 +31,17 @@ const { Services } = Cu.import("resource://gre/modules/Services.jsm", {});
 const actorModuleUrl = options.prefixURI + "lib/wsm-actor.js";
 
 /**
- * This object represents a new {@Toolbox} panel
+ * This object represents a new {@Toolbox} panel. This object is
+ * running within the chrome scope and ensures basic Toolbox
+ * panel aspects such as a tab in the Toolbox tab-bar, etc.
+ *
+ * The content of the panel is rendered using an iframe that
+ * overlaps the entire space. The iframe is called a 'view' and
+ * its content is running in content scope (no chrome privileges).
+ * HTML in the view is generated using React+Redux libraries.
+ *
+ * Communication between the panel and view is done through
+ * asynchronous messaging.
  */
 const WsmPanel = Class(
 /** @lends WsmPanel */
