@@ -38,22 +38,29 @@ var Sidebar = React.createClass({
 
   render: function() {
     var tabActive = this.state.tabActive;
+    var selectedFrame = this.props.selection || {};
 
-    return (
-      Tabs({tabActive: tabActive, onAfterChange: this.onTabChanged},
-        TabPanel({className: "details", title: Locale.$STR("websocketmonitor.Details")},
-          DetailsTab(this.props)
-        ),
-        TabPanel({className: "payload", title: Locale.$STR("websocketmonitor.Payload")},
-          PayloadTab(this.props)
-        ),
+    var tabs = [
+      TabPanel({className: "details", title: Locale.$STR("websocketmonitor.Details")},
+        DetailsTab(this.props)
+      ),
+      TabPanel({className: "payload", title: Locale.$STR("websocketmonitor.Payload")},
+        PayloadTab(this.props)
+      )
+    ];
+
+    if (selectedFrame && selectedFrame.socketIo) {
+      tabs.push(
         TabPanel({className: "socketio", title: Locale.$STR("websocketmonitor.SocketIO")},
           SocketIOTab(this.props)
-        )/*,
-        TabPanel({className: "stack", title: "Stack"},
-          StackTab(this.props)
-        )*/
-      )
+      ));
+    }
+
+    /*TabPanel({className: "stack", title: "Stack"},
+      StackTab(this.props)*/
+
+    return (
+      Tabs({tabActive: tabActive, onAfterChange: this.onTabChanged}, tabs)
     );
   }
 });
