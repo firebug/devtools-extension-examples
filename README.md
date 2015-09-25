@@ -165,7 +165,21 @@ Related API:
     MessageManager
     Frame script
     Mode View Controller
-    Chromd & Content scope communication
+    Chrome & Content scope communication
+
+WebSockets
+----------
+Real world extension showing how to intercept WebSockets communication.
+This extension shows how to implement complex extension based on existing
+standard web technologies. Architecture of the extension is based on
+SimpleMVC example. This extension depends on [Bug 1203802](https://bugzilla.mozilla.org/show_bug.cgi?id=1203802)
+
+Related API:
+
+    Firebug.SDK
+    ReactJS
+    Redux
+    nsIWebSocketFrameService
 
 Further Resources
 =================
