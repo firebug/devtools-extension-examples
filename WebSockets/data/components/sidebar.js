@@ -56,6 +56,8 @@ var Sidebar = React.createClass({
       ));
     }
 
+    tabActive = Math.min(tabActive, tabs.length);
+
     /*TabPanel({className: "stack", title: "Stack"},
       StackTab(this.props)*/
 
