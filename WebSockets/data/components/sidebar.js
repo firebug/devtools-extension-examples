@@ -15,6 +15,7 @@ const { Tabs, TabPanel } = createFactories(require("reps/tabs"));
 const { DetailsTab } = createFactories(require("./details-tab"));
 const { StackTab } = createFactories(require("./stack-tab"));
 const { PayloadTab } = createFactories(require("./payload-tab"));
+const { SocketIOTab } = createFactories(require("./socketio-tab"));
 
 /**
  * @template This template represents a list of packets displayed
@@ -45,6 +46,9 @@ var Sidebar = React.createClass({
         ),
         TabPanel({className: "payload", title: Locale.$STR("websocketmonitor.Payload")},
           PayloadTab(this.props)
+        ),
+        TabPanel({className: "socketio", title: Locale.$STR("websocketmonitor.SocketIO")},
+          SocketIOTab(this.props)
         )/*,
         TabPanel({className: "stack", title: "Stack"},
           StackTab(this.props)

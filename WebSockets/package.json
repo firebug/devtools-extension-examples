@@ -6,8 +6,9 @@
   "author": "Jan Odvarko",
   "license": "BSD",
   "version": "0.2.0",
-  "main": "lib/main",
+  "main": "lib/index",
   "dependencies": {
-    "firebug.sdk": "0.x"
+    "firebug.sdk": "0.x",
+    "socket.io-parser": "^2.2.4"
   }
 }

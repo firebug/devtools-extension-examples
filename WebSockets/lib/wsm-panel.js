@@ -27,6 +27,9 @@ const { WsmActorFront } = require("./wsm-actor.js");
 // Platform
 const { Services } = Cu.import("resource://gre/modules/Services.jsm", {});
 
+// Socket.IO Parser
+var parser = require('socket.io-parser');
+
 // Constants
 const actorModuleUrl = options.prefixURI + "lib/wsm-actor.js";
 
@@ -230,12 +233,32 @@ const WsmPanel = Class(
   // nsIWebSocketFrameService events
 
   onFrameReceived: function(data) {
+    data.socketIo = this.decodePacket(data.maskBit.payload);
     this.postContentMessage("frameReceived", JSON.stringify(data));
   },
 
   onFrameSent: function(data) {
+    data.socketIo = this.decodePacket(data.header.payload);
     this.postContentMessage("frameSent", JSON.stringify(data));
   },
+
+  // Socket.IO Parser
+
+  decodePacket: function(data) {
+    let result;
+    try {
+      var decoder = new parser.Decoder();
+      decoder.on("decoded", function(decodedPacket) {
+        if (decodedPacket.data != "parser error") {
+          result = decodedPacket;
+        }
+      });
+      decoder.add(data);
+    } catch (err) {
+      return;
+    }
+    return result;
+  }
 });
 
 // Helpers
