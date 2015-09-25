@@ -111,7 +111,9 @@ var FrameRow = React.createFactory(React.createClass({
     var payload = Str.cropString(data.payload, 50);
     var size = Str.formatSize(data.payload.length);
     var onClick = this.onClick.bind(this);
-    var time = new Date(data.timeStamp);
+    var time = new Date(data.timeStamp / 1000);
+    var timeText = time.getHours() + ":" + time.getMinutes() +
+      ":" + time.getSeconds() + "." + time.getMilliseconds();
 
     return (
       tr({className: className, onClick: onClick},
@@ -124,7 +126,7 @@ var FrameRow = React.createFactory(React.createClass({
         td({className: "opcode"}, this.getOpCode()),
         td({className: "bit"}, data.maskBit ? "true" : "false"),
         td({className: "bit"}, data.finBit ? "true" : "false"),
-        td({className: "time"}, time.toLocaleTimeString())
+        td({className: "time"}, timeText)
       )
     );
   }
