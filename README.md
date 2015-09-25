@@ -11,7 +11,10 @@ Run with Firefox Nightly on OSX:
 
 `jpm run -b /Applications/FirefoxNightly.app`
 
-See also: [Hacking on Firebug](https://github.com/firebug/firebug.next#hacking-on-firebugnext-aka-firebug-3)
+
+See also:
+* [Hacking on DevTools](https://wiki.mozilla.org/DevTools/Hacking)
+* [Hacking on Firebug](https://github.com/firebug/firebug.next#hacking-on-firebugnext-aka-firebug-3)
 
 HelloWorld
 ----------
