@@ -46,7 +46,13 @@ var WsmActor = ActorClass({
    */
   events: {
     "frameReceived": { data: Arg(0, "json") },
-    "frameSent": { data: Arg(0, "json") }
+    "frameSent": { data: Arg(0, "json") },
+    "onStart": { data: Arg(0, "json") },
+    "onStop": { data: Arg(0, "json") },
+    "onMessageAvailable": { data: Arg(0, "json") },
+    "onBinaryMessageAvailable": { data: Arg(0, "json") },
+    "onAcknowledge": { data: Arg(0, "json") },
+    "onServerClose": { data: Arg(0, "json") }
   },
 
   // Initialization
@@ -154,6 +160,48 @@ var WsmActor = ActorClass({
       webSocketSerialID: webSocketSerialID,
       header: header,
       payload: payload
+    });
+  },
+
+  onStart: function(aWebSocketSerialID) {
+    Events.emit(this, "onStart", {
+      webSocketSerialID: aWebSocketSerialID
+    });
+  },
+
+  onStop: function(aWebSocketSerialID, aStatusCode) {
+    Events.emit(this, "onStop", {
+      webSocketSerialID: aWebSocketSerialID,
+      statusCode: aStatusCode
+    });
+  },
+
+  onMessageAvailable: function(aWebSocketSerialID, aMsg) {
+    Events.emit(this, "onMessageAvailable", {
+      webSocketSerialID: aWebSocketSerialID,
+      msg: aMsg
+    });
+  },
+
+  onBinaryMessageAvailable: function(aWebSocketSerialID, aMsg) {
+    Events.emit(this, "onBinaryMessageAvailable", {
+      webSocketSerialID: aWebSocketSerialID,
+      msg: aMsg
+    });
+  },
+
+  onAcknowledge: function(aWebSocketSerialID, aSize) {
+    Events.emit(this, "onAcknowledge", {
+      webSocketSerialID: aWebSocketSerialID,
+      size: aSize
+    });
+  },
+
+  onServerClose: function(aWebSocketSerialID, aCode, aReason) {
+    Events.emit(this, "onServerClose", {
+      webSocketSerialID: aWebSocketSerialID,
+      code: aCode,
+      reason: aReason
     });
   },
 

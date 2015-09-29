@@ -61,6 +61,12 @@ const WsmPanel = Class(
     // nsIWebSocketFrameService events
     this.onFrameReceived = this.onFrameReceived.bind(this);
     this.onFrameSent = this.onFrameSent.bind(this);
+    this.onStart = this.onStart.bind(this);
+    this.onStop = this.onStop.bind(this);
+    this.onMessageAvailable = this.onMessageAvailable.bind(this);
+    this.onBinaryMessageAvailable = this.onBinaryMessageAvailable.bind(this);
+    this.onAcknowledge = this.onAcknowledge.bind(this);
+    this.onServerClose = this.onServerClose.bind(this);
   },
 
   onReady: function() {
@@ -95,6 +101,12 @@ const WsmPanel = Class(
       // Drag-drop listener (events sent from the backend)
       this.front.on("frameReceived", this.onFrameReceived);
       this.front.on("frameSent", this.onFrameSent);
+      this.front.on("onStart", this.onStart);
+      this.front.on("onStop", this.onStop);
+      this.front.on("onMessageAvailable", this.onMessageAvailable);
+      this.front.on("onBinaryMessageAvailable", this.onBinaryMessageAvailable);
+      this.front.on("onAcknowledge", this.onAcknowledge);
+      this.front.on("onServerClose", this.onServerClose);
 
       // xxxHonza: unregister actor on shutdown/disable/uninstall
       // but not on toolbox close.
@@ -118,6 +130,12 @@ const WsmPanel = Class(
 
       front.off("frameReceived", this.onFrameReceived);
       front.off("frameSent", this.onFrameSent);
+      front.off("onStart", this.onStart);
+      front.off("onStop", this.onStop);
+      front.off("onMessageAvailable", this.onMessageAvailable);
+      front.off("onBinaryMessageAvailable", this.onBinaryMessageAvailable);
+      front.off("onAcknowledge", this.onAcknowledge);
+      front.off("onServerClose", this.onServerClose);
 
       deferred.resolve(response);
     });
@@ -137,6 +155,30 @@ const WsmPanel = Class(
   onFrameSent: function(data) {
     data.socketIo = this.decodePacket(data.header.payload);
     this.postContentMessage("frameSent", JSON.stringify(data));
+  },
+
+  onStart: function(data) {
+    console.log("WsmPanel.onStart;", data);
+  },
+
+  onStop: function(data) {
+    console.log("WsmPanel.onStop;", data);
+  },
+
+  onMessageAvailable: function(data) {
+    console.log("WsmPanel.onMessageAvailable;", data);
+  },
+
+  onBinaryMessageAvailable: function(data) {
+    console.log("WsmPanel.onBinaryMessageAvailable;", data);
+  },
+
+  onAcknowledge: function(data) {
+    console.log("WsmPanel.onAcknowledge;", data);
+  },
+
+  onServerClose: function(data) {
+    console.log("WsmPanel.onServerClose;", data);
   },
 
   // Socket.IO Parser
