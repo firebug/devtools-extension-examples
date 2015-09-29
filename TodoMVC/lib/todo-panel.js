@@ -45,7 +45,7 @@ const TodoPanel = Class(
   label: Locale.$STR("todomvc.panel.title"),
   tooltip: Locale.$STR("todomvc.panel.tooltip"),
   icon: "./icon-16.png",
-  url: "./view.html",
+  url: "./todo-view.html",
 
   /**
    * Executed by the framework when an instance of this panel is created.
