@@ -184,8 +184,8 @@ Related API:
     Redux
     nsIWebSocketFrameService
 
-WebSockets
-----------
+TodoMVC
+-------
 Basic example extension showing how to use ReactJS+Redux to implement
 an extension for Firefox deveoper tools. The example is taken
 and adapted from the official Redux docs. Recommended main for
