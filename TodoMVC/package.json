@@ -1,0 +1,13 @@
+{
+  "name": "todomvc",
+  "title": "Todo MVC",
+  "id": "todomvc@getfirebug.com",
+  "description": "How to use Redux to build developer tools extensions",
+  "author": "Jan Odvarko",
+  "license": "BSD",
+  "version": "0.5.0",
+  "main": "lib/main",
+  "dependencies": {
+    "firebug.sdk": "0.x"
+  }
+}

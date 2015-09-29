@@ -1,0 +1,5 @@
+skin    todomvc-firebug.sdk  classic/1.0    node_modules/firebug.sdk/skin/classic/shared/
+
+locale  todomvc en-US                       chrome/locale/en-US/
+
+locale  todomvc-firebug.sdk  en-US          node_modules/firebug.sdk/locale/en-US/
