@@ -170,20 +170,6 @@ Related API:
     Mode View Controller
     Chrome & Content scope communication
 
-WebSockets
-----------
-Real world extension showing how to intercept WebSockets communication.
-This extension shows how to implement complex extension based on existing
-standard web technologies. Architecture of the extension is based on
-SimpleMVC example. This extension depends on [Bug 1203802](https://bugzilla.mozilla.org/show_bug.cgi?id=1203802)
-
-Related API:
-
-    Firebug.SDK
-    ReactJS
-    Redux
-    nsIWebSocketFrameService
-
 TodoMVC
 -------
 Basic example extension showing how to use ReactJS+Redux to implement
@@ -197,6 +183,20 @@ Related API:
     Firebug.SDK
     ReactJS
     Redux
+
+WebSockets
+----------
+Real world extension showing how to intercept WebSockets communication.
+This extension shows how to implement complex extension based on existing
+standard web technologies. Architecture of the extension is based on
+SimpleMVC example. This extension depends on [Bug 1203802](https://bugzilla.mozilla.org/show_bug.cgi?id=1203802)
+
+Related API:
+
+    Firebug.SDK
+    ReactJS
+    Redux
+    nsIWebSocketFrameService
 
 Further Resources
 =================
