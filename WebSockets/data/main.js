@@ -16,7 +16,6 @@ const { Provider } = createFactories(require("react-redux"));
 
 // WebSockets Monitor
 const { App } = createFactories(require("./containers/app"));
-const { Resizer } = require("./resizer");
 const { configureStore } = require("./store/configure-store");
 const { addFrames } = require("./actions/frames");
 
