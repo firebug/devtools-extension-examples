@@ -3,22 +3,16 @@
 "use strict";
 
 // Add-on SDK
-const self = require("sdk/self");
 const options = require("@loader/options");
 const { Cu, Ci } = require("chrome");
 const { Class } = require("sdk/core/heritage");
 const { Tool } = require("dev/toolbox");
-const { viewFor } = require("sdk/view/core");
 const { defer, resolve, all } = require("sdk/core/promise");
-const Events = require("sdk/dom/events");
-const { loadSheet, removeSheet } = require("sdk/stylesheet/utils");
 
 // Firebug.SDK
 const { Rdp } = require("firebug.sdk/lib/core/rdp.js");
 const { Locale } = require("firebug.sdk/lib/core/locale.js");
 const { Content } = require("firebug.sdk/lib/core/content.js");
-const { ToolboxChrome } = require("firebug.sdk/lib/toolbox-chrome.js");
-const { devtools, gDevTools } = require("firebug.sdk/lib/core/devtools.js");
 const { PanelBase } = require("firebug.sdk/lib/panel-base.js");
 
 // WebSocket Monitor
