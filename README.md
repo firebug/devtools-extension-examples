@@ -184,6 +184,20 @@ Related API:
     Redux
     nsIWebSocketFrameService
 
+WebSockets
+----------
+Basic example extension showing how to use ReactJS+Redux to implement
+an extension for Firefox deveoper tools. The example is taken
+and adapted from the official Redux docs. Recommended main for
+web developers who want to use existing knowledge and build Firefox
+developer tools extensions.
+
+Related API:
+
+    Firebug.SDK
+    ReactJS
+    Redux
+
 Further Resources
 =================
 * Add-on SDK: https://developer.mozilla.org/en-US/Add-ons/SDK
