@@ -8,6 +8,7 @@ define(function(require/*, exports, module*/) {
 
 // Firebug.SDK
 const { createFactories } = require("reps/rep-utils");
+const { PanelView, createView } = require("firebug.sdk/lib/panel-view");
 
 // ReactJS & Redux
 const React = require("react");
@@ -17,57 +18,29 @@ const { Provider } = createFactories(require("react-redux"));
 const { App } = createFactories(require("./containers/app"));
 const { configureStore } = require("./store/configure-store");
 
-const { Resizer } = require("./resizer");
-
 var store = configureStore();
 
-// Events from Chrome
-
-addEventListener("initialize", function(event) {
-  initialize(event.data);
-});
-
-// Implementation
-
 /**
- * Render the content.
- */
-function initialize(data) {
-  var content = document.getElementById("content");
-
-  // Render the top level component
-  var theApp = React.render(Provider({store: store},
-    () => App({})
-  ), content);
-
-  // Make sure the document takes the entire available space
-  // (vertically and horizontally).
-  new Resizer(window, theApp);
-}
-
-// Connection to Chrome
-
-/**
- * Post events to the frameScript.js scope, it's consequently
- * forwarded to the chrome scope through message manager and
- * handled by myPanel.js (Controller, chrome scope).
+ * This object represents a view that is responsible for rendering
+ * Toolbox panel's content. The view is running inside panel's frame
+ * and so, within content scope with no extra privileges.
  *
- * @param type {String} Type of the message.
- * @param data {Object} Message data, must be serializable to JSON.
+ * Rendering is done through standard web technologies like e.g.
+ * React and Redux.
  */
-function postChromeMessage(id, data) {
-  // Generate custom DOM event.
-  const event = new MessageEvent("ws-monitor/event", {
-    data: {
-      type: id,
-      args: data,
-    }
-  });
-
-  dispatchEvent(event);
-}
-
-postChromeMessage("ready");
+var TodoView = createView(PanelView,
+/** @lends TodoView */
+{
+  /**
+   * Render the top level application component.
+   */
+  initialize: function() {
+    var content = document.getElementById("content");
+    var theApp = React.render(Provider({store: store},
+      () => App({})
+    ), content);
+  }
+});
 
 // End of main.js
 });
