@@ -54,7 +54,6 @@
 /* Frame Rows */
 
 .frameRow td {
-  background: white;
   height: 17px;
   line-height: 15px;
   border-bottom: 1px solid #EFEFEF;
@@ -145,5 +144,27 @@
 }
 
 /******************************************************************************/
-/* Theme Light */
+/* Theme Dark & Light */
 
+.theme-light .frameRow td,
+.theme-dark .frameRow td {
+  border-bottom: none;
+}
+
+.theme-light .frameRow:hover td,
+.theme-dark .frameRow:hover td {
+  background-color: var(--theme-selection-background-semitransparent);
+}
+
+.theme-light .frameRow.selected td,
+.theme-dark .frameRow.selected td {
+  color: var(--theme-selection-color);
+  background-color: var(--theme-selection-background);
+}
+
+.theme-light .frameTHead th,
+.theme-dark .frameTHead th {
+  font-weight: normal;
+  color: var(--theme-body-color-alt);
+  background-color: var(--theme-toolbar-background);
+}
