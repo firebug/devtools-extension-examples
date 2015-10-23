@@ -97,6 +97,7 @@ function attachActor(target, form) {
     // Finally, execute remote method on the actor!
     myActor.hello().then(response => {
       console.log("Response from the actor: " + response.msg, response);
+      Cu.reportError("Response from the actor: " + response.msg, response);
     });
   });
 }
