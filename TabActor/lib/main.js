@@ -78,6 +78,7 @@ function registerActor(target, response) {
 
   registry.registerActor(actorModuleUrl, options).then(actorRegistrar => {
     console.log("My tab actor is now registered");
+    Cu.reportError("My tab actor is now registered");
 
     // Remember, so we can unregister the actor later.
     myActorRegistrar = actorRegistrar;
@@ -93,10 +94,12 @@ function attachActor(target, form) {
   let myActor = MyTabActorFront(target.client, form);
   myActor.attach().then(() => {
     console.log("My actor is now attached");
+    Cu.reportError("My actor is now attached");
 
     // Finally, execute remote method on the actor!
     myActor.hello().then(response => {
       console.log("Response from the actor: " + response.msg, response);
+      Cu.reportError("Response from the actor: " + response.msg, response);
     });
   });
 }

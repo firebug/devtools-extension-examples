@@ -64,6 +64,8 @@ var MyTabActor = ActorClass({
    */
   attach: method(expectState("detached", function() {
     this.state = "attached";
+
+    console.log("myTabActor.attach");
   }), {
     request: {},
     response: {
@@ -76,6 +78,8 @@ var MyTabActor = ActorClass({
    */
   detach: method(expectState("attached", function() {
     this.state = "detached";
+
+    console.log("myTabActor.detach");
   }), {
     request: {},
     response: {
