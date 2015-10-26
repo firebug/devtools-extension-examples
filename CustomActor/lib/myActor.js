@@ -38,7 +38,7 @@ function expectState(expectedState, method) {
 /**
  * TODO: description
  */
-let MyActor = ActorClass({
+var MyActor = ActorClass({
   typeName: "myactor",
 
   get dbg() {

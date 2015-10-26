@@ -42,7 +42,7 @@ function expectState(expectedState, method) {
 /**
  * Custom actor object
  */
-let TitleActor = ActorClass({
+var TitleActor = ActorClass({
   typeName: "titleactor",
 
   initialize: function(conn, parent) {

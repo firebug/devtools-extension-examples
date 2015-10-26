@@ -39,7 +39,7 @@ function expectState(expectedState, method) {
 /**
  * Custom actor object
  */
-let MyTabActor = ActorClass({
+var MyTabActor = ActorClass({
   typeName: "mytabactor",
 
   initialize: function(conn, parent) {

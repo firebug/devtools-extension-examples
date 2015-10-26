@@ -39,7 +39,7 @@ function expectState(expectedState, method) {
 /**
  * Custom actor object
  */
-let MyGlobalActor = ActorClass({
+var MyGlobalActor = ActorClass({
   typeName: "myglobalactor",
 
   initialize: function(conn, parent) {
