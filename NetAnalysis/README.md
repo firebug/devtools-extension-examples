@@ -9,9 +9,10 @@ Instructions
 1. Install the extension
 2. Open developer tools toolbox (F12 or Menu -> Developer -> Toogle Tools)
 3. Select the 'Network' panel
-4. You should see a 'YSlow' button at the bottom right corner. Check the
-source code, it shows how to get all data collected by the Network panel
-as HAR object.
+4. You should see a 'YSlow' button at the bottom right corner.
+5. Click the button and check Browser Console (Ctrl+Shift+J or Menu -> Developer -> Browser Console),
+to see the HAR object.
+6. Check the source code, it shows how to get all data collected by the Network panel as HAR object.
 
 Further Resources
 -----------------
