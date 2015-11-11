@@ -8,11 +8,11 @@ const { devtools } = Cu.import("resource://gre/modules/devtools/Loader.jsm", {})
 const { console } = Cu.import("resource://gre/modules/devtools/Console.jsm", {});
 
 // https://bugzilla.mozilla.org/show_bug.cgi?id=912121 
-const HarExporter;
+var HarExporter;
 try {
-  HarExporter = devtools["require"]("devtools/client/netmonitor/har/har-exporter");
+  HarExporter = devtools["require"]("devtools/client/netmonitor/har/har-exporter").HarExporter;
 } catch (err) {
-  HarExporter = devtools["require"]("devtools/netmonitor/har/har-exporter.js");
+  HarExporter = devtools["require"]("devtools/netmonitor/har/har-exporter.js").HarExporter;
 }
 
 /**
