@@ -20,7 +20,7 @@ try {
  * It follows its life time by listening to its events and performs
  * customization of the built-in Network panel.
  */
-const ToolboxOverlay = {
+const MyToolboxOverlay = {
   /**
    * Executed when a new toolbox is ready. There is one instance
    * of the toolbox per browser tab (created when the user opens
@@ -104,8 +104,8 @@ const ToolboxOverlay = {
 };
 
 // Registration
-gDevTools.on("toolbox-created", ToolboxOverlay.onInit.bind(ToolboxOverlay));
-gDevTools.on("toolbox-destroy", ToolboxOverlay.onDestroy.bind(ToolboxOverlay));
+gDevTools.on("toolbox-created", MyToolboxOverlay.onInit.bind(MyToolboxOverlay));
+gDevTools.on("toolbox-destroy", MyToolboxOverlay.onDestroy.bind(MyToolboxOverlay));
 
 // Exports from this module
-exports.ToolboxOverlay = ToolboxOverlay;
+exports.MyToolboxOverlay = MyToolboxOverlay;

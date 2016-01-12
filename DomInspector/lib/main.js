@@ -9,7 +9,7 @@ const { Cu, Ci } = require("chrome");
 const { gDevTools } = Cu.import("resource:///modules/devtools/gDevTools.jsm", {});
 
 // DOM Inspector
-const { ToolboxOverlay } = require("./toolbox-overlay");
+const { MyToolboxOverlay } = require("./my-toolbox-overlay");
 
 /**
  * Initialization
@@ -30,7 +30,7 @@ function onUnload(reason) {
 var overlays = new Map();
 
 function onToolboxReady(eventId, toolbox) {
-  let overlay = new ToolboxOverlay(toolbox);
+  let overlay = new MyToolboxOverlay(toolbox);
   overlays.set(toolbox.target, overlay);
 }
 

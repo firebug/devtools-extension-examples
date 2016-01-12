@@ -20,10 +20,12 @@ const { console } = Cu.import("resource://gre/modules/devtools/Console.jsm", {})
 const { MyActorFront } = require("./my-actor");
 
 /**
- * TODO: desc
+ * This object is responsible for initialization and cleanup.
+ * It represents an overlay for the developer Toolbox and it's
+ * following the same life cycle.
  */
-const ToolboxOverlay = Class(
-/** @lends ToolboxOverlay */
+const MyToolboxOverlay = Class(
+/** @lends MyToolboxOverlay */
 {
   // Initialization
 
@@ -97,4 +99,4 @@ const ToolboxOverlay = Class(
 });
 
 // Exports from this module
-exports.ToolboxOverlay = ToolboxOverlay;
+exports.MyToolboxOverlay = MyToolboxOverlay;

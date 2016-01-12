@@ -13,7 +13,7 @@ const { ActorRegistryFront } = devtools["require"]("devtools/server/actors/actor
 
 const XUL_NS = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
 
-// List of all created ToolboxOverlays.
+// List of all created MyToolboxOverlays.
 var overlays = new Map();
 
 /**
@@ -23,7 +23,7 @@ function main(options, callbacks) {
   // TODO: Toolbox instance can already exist if the extension
   // is installed (or enabled) in the middle of Firefox session.
   // All browser windows and tabs should be iterated to manually
-  // create ToolboxOverlay instances.
+  // create MyToolboxOverlay instances.
 
   // Wait for every Toolbox initialization (there is one Toolbox
   // created per browser tab).
@@ -36,7 +36,7 @@ function main(options, callbacks) {
 function onUnload(reason) {
   gDevTools.off("toolbox-created", onToolboxCreated);
 
-  // Manually destroy all existing instances of ToolboxOverlay
+  // Manually destroy all existing instances of MyToolboxOverlay
   // Needed if the extension is disabled or uninstalled in the
   // middle of Firefox session - to clean up all.
   overlays.forEach((value, key) => {
@@ -45,17 +45,20 @@ function onUnload(reason) {
 }
 
 /**
- * Create instance of ToolboxOverlay for every opened Toolbox.
+ * Create instance of MyToolboxOverlay for every opened Toolbox.
  */
 function onToolboxCreated(event, toolbox) {
-  let overlay = new ToolboxOverlay(toolbox);
+  let overlay = new MyToolboxOverlay(toolbox);
   overlays.set(toolbox, overlay);
 }
 
 /**
- * Toolbox Overlay
+ * Toolbox Overlay. This object listens for developer Toolbox
+ * events and follows the same life cycle. This is only simplified
+ * example how to implement overlays for existing devtools widgets
+ * and you can find real implementation in Firebug.SDK
  */
-function ToolboxOverlay(toolbox) {
+function MyToolboxOverlay(toolbox) {
   this.toolbox = toolbox;
 
   this.ready = this.ready.bind(this);
@@ -68,7 +71,7 @@ function ToolboxOverlay(toolbox) {
   this.toolbox.on("webconsole-ready", this.onConsoleReady);
 }
 
-ToolboxOverlay.prototype = {
+MyToolboxOverlay.prototype = {
   titleActorRegistrar: null,
 
   /**

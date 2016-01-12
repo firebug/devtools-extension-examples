@@ -7,7 +7,7 @@ const { Cc, Ci, components } = require("chrome");
 // The only responsibility of the 'main' module is loading
 // 'toolbox-overlay' that is responsible for the Network
 // panel customization.
-require("./toolbox-overlay.js");
+require("./my-toolbox-overlay.js");
 
 function onLoad(options, callbacks) {
 };
