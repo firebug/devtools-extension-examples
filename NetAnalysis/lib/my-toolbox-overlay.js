@@ -28,7 +28,7 @@ const MyToolboxOverlay = {
    */
   onInit: function(eventId, toolbox) {
     this.onNetPanelReady = this.onNetPanelReady.bind(this);
-    this.onYSlowClick = this.onYSlowClick.bind(this);
+    this.onHarClick = this.onHarClick.bind(this);
 
     // Wait till the Network panel is ready. The panel is created
     // when the user selects it for the first time.
@@ -53,21 +53,21 @@ const MyToolboxOverlay = {
     // Build a simple 'YSlow' button that performs analysis
     // of Network data.
     let button = doc.createElement("button");
-    button.className = "requests-menu-footer-button";
-    button.id = "requests-menu-yslow-button"
+    button.className = "devtools-toolbarbutton";
+    button.id = "requests-menu-har-button"
     button.tooltip = "Run HAR analysis";
-    button.setAttribute("label", "YSlow");
-    button.addEventListener("command", this.onYSlowClick, false);
+    button.setAttribute("label", "HAR");
+    button.addEventListener("command", this.onHarClick, false);
 
-    // Append into the bottom toolbar (see the bottom right corner).
-    let footer = doc.getElementById("requests-menu-footer");
-    footer.appendChild(button);
+    // Append into the top toolbar (see the bottom right corner).
+    let toolbar = doc.getElementById("netmonitor-toolbar");
+    toolbar.appendChild(button);
   },
 
   /**
-   * Executed when the 'YSlow' button is clicked.
+   * Executed when the 'HAR' button is clicked.
    */
-  onYSlowClick: function(event) {
+  onHarClick: function(event) {
     let win = this.netPanel.panelWin;
     let RequestsMenu = win.NetMonitorView.RequestsMenu;
 
