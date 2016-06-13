@@ -130,19 +130,6 @@ Related API:
 
 TitleManager
 ------------
-An example showing how to perform custom analysis of data collected by
-the Network panel. Check out how to get all data as HAR object.
-See also: http://www.softwareishard.com/blog/har-12-spec/
-
-Related API:
-
-    HAR
-    HARBuilder
-    HARExporter
-    ToolboxOverlay
-
-NetAnalysis
------------
 An example extension showing how to access 'window' global
 in the web page and also register new Console command-line
 commands.
@@ -153,6 +140,20 @@ Related API:
     registerTabActor()
     Toolbox Events
     WebConsoleCommands
+    ToolboxOverlay
+
+
+NetAnalysis
+-----------
+An example showing how to perform custom analysis of data collected by
+the Network panel. Check out how to get all data as HAR object.
+See also: http://www.softwareishard.com/blog/har-12-spec/
+
+Related API:
+
+    HAR
+    HARBuilder
+    HARExporter
     ToolboxOverlay
 
 SimpleMVC
