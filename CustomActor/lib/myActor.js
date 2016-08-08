@@ -47,7 +47,21 @@ var MyActor = ActorClass({
     }
     return this._dbg;
   },
-
+ 
+  /*
+  * The method for initializing the actor receives two arguments.
+  * @param String conn
+  *        The associated DebuggerServerConnection object.
+  *
+  * @param TabActor parent
+  *        The TabActor that represents the page being targeted. Among useful
+  *        properties are traits, parentID, actorID and window. It also allows
+  *        listening for several useful events. See 
+  *        https://dxr.mozilla.org/mozilla-central/source/devtools/server/actors/webbrowser.js#743
+  *
+  * @returns
+  *        No return value
+  */
   initialize: function(conn, parent) {
     Actor.prototype.initialize.call(this, conn);
 
